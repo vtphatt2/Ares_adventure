@@ -26,12 +26,12 @@ A hidden treasure lies behind a gate in a faraway kingdom, which can only be unl
 # Input
 The input files are : input-01.txt, input-02.txt, input-03.txt,...
 The format of the input file is as described below:
-    - The first line contains list of integers representing the weights of each stone, in the order they appear in the grid, **from left to right and top to bottom**.
-    - The following lines describe the grid itself using the following characters:
-        – “#” for walls.
-        – “ ” (whitespace) for free spaces. 
-        – “$” for stones.
-        – “@” for Ares.
-        – “.” for switch places.
-        – “*” for stones placed on switches. 
-        – “+” for Ares on a switch.
+- The first line contains list of integers representing the weights of each stone, in the order they appear in the grid, **from left to right and top to bottom**.
+- The following lines describe the grid itself using the following characters:
+    - “#” for walls.
+    - “ ” (whitespace) for free spaces. 
+    - “$” for stones.
+    - “@” for Ares.
+    - “.” for switch places.
+    - “*” for stones placed on switches. 
+    - “+” for Ares on a switch.
