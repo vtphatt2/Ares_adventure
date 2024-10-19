@@ -22,3 +22,45 @@ class Result:
             f.write(f"Steps: {self.steps}, Weight: {self.weight}, Node: {self.node}, Time (ms): {self.time}, Memory (MB): {self.memory}\n")
             f.write(self.sequence_of_actions + "\n")
 
+    # all getters and setters
+    def get_search_algo_name(self):
+        return self.search_algo_name
+    
+    def set_search_algo_name(self, search_algo_name):
+        self.search_algo_name = search_algo_name    
+    
+    def get_steps(self):
+        return self.steps
+    
+    def set_steps(self, steps):
+        self.steps = steps
+
+    def get_weight(self):
+        return self.weight
+    
+    def set_weight(self, weight):
+        self.weight = weight
+    
+    def get_node(self):
+        return self.node
+    
+    def set_node(self, node):
+        self.node = node
+
+    def get_time(self):
+        return self.time
+    
+    def set_time(self, time):
+        self.time = time
+
+    def get_memory(self):
+        return self.memory
+    
+    def set_memory(self, memory):
+        self.memory = memory
+
+    def get_sequence_of_actions(self):
+        return self.sequence_of_actions
+    
+    def set_sequence_of_actions(self, sequence_of_actions):
+        self.sequence_of_actions = sequence_of_actions
