@@ -1,12 +1,12 @@
 class Result:
-    def __init__(self, search_algo_name = ""):
-        self.search_algo_name = search_algo_name  # for example : BFS
-        self.steps = 0      # for example : 16
-        self.weight = 0     # for example : 695
-        self.node = 0       # for example : 4321
-        self.time = 0.00    # unit : ms, for example : 58.12
-        self.memory = 0.00  # unit : MB, for example : 12.56
-        self.sequence_of_actions = ""      # for example : uLulDrrRRRRRRurD
+    def __init__(self, search_algo_name = "", steps = 0, weight = 0, node = 0, time = 0.00, memory = 0.00, sequence_of_actions = ""):
+        self.search_algo_name = search_algo_name        # for example : BFS
+        self.steps = steps                              # for example : 16
+        self.weight = weight                            # for example : 695
+        self.node = node                                # for example : 4321
+        self.time = time                                # unit : ms, for example : 58.12
+        self.memory = memory                            # unit : MB, for example : 12.56
+        self.sequence_of_actions = sequence_of_actions  # for example : uLulDrrRRRRRRurD
 
     def save(self, filepath = "", mode = "a"):
         """
