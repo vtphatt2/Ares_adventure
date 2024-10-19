@@ -7,6 +7,7 @@ class Result:
         self.time = time                                # unit : ms, for example : 58.12
         self.memory = memory                            # unit : MB, for example : 12.56
         self.sequence_of_actions = sequence_of_actions  # for example : uLulDrrRRRRRRurD
+        self.weight_steps = []                          # for example : [0, 3, 10, 15, 30, 32]
 
     def save(self, filepath = "", mode = "a"):
         """
@@ -64,3 +65,9 @@ class Result:
     
     def set_sequence_of_actions(self, sequence_of_actions):
         self.sequence_of_actions = sequence_of_actions
+
+    def get_weight_steps(self):
+        return self.weight_steps
+    
+    def set_weight_steps(self, weight_steps):
+        self.weight_steps = weight_steps
