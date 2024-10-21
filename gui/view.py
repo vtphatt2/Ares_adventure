@@ -71,11 +71,11 @@ class MazeView(QWidget):
         elif cell == '@':
             return self.create_character_cell(row, col)
         elif cell == '$':
-            return self.create_stone_cell(row, col, weight=self.maze.stone_weights.pop(0))
+            return self.create_stone_cell(row, col, scale_factor=1, weight=self.maze.stone_weights.pop(0))
         elif cell == '.':
             return self.create_switch_cell(row, col)
         elif cell == '*':
-            return self.create_stone_on_switch_cell(row, col)
+            return self.create_stone_on_switch_cell(row, col, scale_factor=1, weight=self.maze.stone_weights.pop(0))
         elif cell == '+':
             return self.create_character_on_switch_cell(row, col)
         else:
@@ -109,45 +109,108 @@ class MazeView(QWidget):
         return frame
 
     def create_character_cell(self, row, col):
-        return self._create_image_frame("images/ares.jpg", row, col, scale_factor=1.2)
+        return self._create_image_frame("images/ares.svg", row, col, scale_factor=1)
 
-    def create_stone_cell(self, row, col, weight):
-        return self._create_stone_image_frame("images/stone.svg", row, col, scale_factor=1, weight=weight)
+    def create_stone_cell(self, row, col, scale_factor, weight):
+        return self._create_stone_image_frame("images/stone.svg", row, col, scale_factor=scale_factor, weight=weight)
 
     def create_switch_cell(self, row, col):
         return self._create_image_frame("images/switch.svg", row, col, scale_factor=0.6)
 
-    def create_stone_on_switch_cell(self, row, col):
+    def create_stone_on_switch_cell(self, row, col, scale_factor, weight):
         frame = QFrame()
         frame.setFixedSize(self.CELL_SIZE, self.CELL_SIZE)
+        
         style = self._get_border_style(row, col)
-        frame.setStyleSheet(f"background-color: transparent; {style}")
-
-        label = QLabel('*', frame)
-        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        label.setStyleSheet("color: red; font-weight: bold; font-size: 20px;")
-
-        layout = QVBoxLayout()
-        layout.setContentsMargins(-5, -5, -5, -5)
-        layout.addWidget(label)
+        frame.setStyleSheet(f"background-color: green; {style}")
+        
+        layout = QGridLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
         frame.setLayout(layout)
+        
+        switch_label = QLabel(frame)
+        switch_pixmap = QPixmap("images/switch.svg")
+        switch_pixmap = switch_pixmap.scaled(
+            int(self.CELL_SIZE * 0.6), 
+            int(self.CELL_SIZE * 0.6),
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation
+        )
+        switch_label.setPixmap(switch_pixmap)
+        switch_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        switch_label.setStyleSheet("border: none; background-color: transparent;")
+        layout.addWidget(switch_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
+        
+        stone_label = QLabel(frame)
+        stone_pixmap = QPixmap("images/stone.svg")
+        new_width = int(self.CELL_SIZE * scale_factor)
+        new_height = int(self.CELL_SIZE * scale_factor)
+        stone_pixmap = stone_pixmap.scaled(
+            new_width,  
+            new_height,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation
+        )
+        stone_label.setPixmap(stone_pixmap)
+        stone_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        stone_label.setStyleSheet("border: none; background-color: transparent;")
+        layout.addWidget(stone_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
 
+        label_width = max(int(new_width / 1.8), 10)  # Đảm bảo tối thiểu 18
+        label_height = max(int(new_height / 1.8), 10)
+        
+        weight_label = QLabel(str(weight), frame)
+        weight_label.setFixedSize(QSize(label_width, label_height))
+        weight_label.setStyleSheet(f"""
+            color: white;
+            font-size: {int(label_width / 2)}px;
+            background-color: rgba(1, 1, 1, 1);  
+            border-radius: {int(label_width / 2)}px;
+            padding: 2px 5px;
+        """)
+        weight_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(weight_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
+                
         return frame
 
     def create_character_on_switch_cell(self, row, col):
         frame = QFrame()
         frame.setFixedSize(self.CELL_SIZE, self.CELL_SIZE)
         style = self._get_border_style(row, col)
-        frame.setStyleSheet(f"background-color: transparent; {style}")
+        frame.setStyleSheet(f"background-color: {self.INNER_CELL_COLOR}; {style}")
 
-        label = QLabel('+', frame)
-        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        label.setStyleSheet("color: blue; font-weight: bold; font-size: 20px;")
-
-        layout = QVBoxLayout()
-        layout.setContentsMargins(-5, -5, -5, -5)
-        layout.addWidget(label)
+        # Use QGridLayout to overlay widgets
+        layout = QGridLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
         frame.setLayout(layout)
+
+        # Add the switch image
+        switch_label = QLabel(frame)
+        switch_pixmap = QPixmap("images/switch.svg")
+        switch_pixmap = switch_pixmap.scaled(
+            int(self.CELL_SIZE * 0.6),  # Scale factor for the switch
+            int(self.CELL_SIZE * 0.6),
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation
+        )
+        switch_label.setPixmap(switch_pixmap)
+        switch_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        switch_label.setStyleSheet("border: none; background-color: transparent;")
+        layout.addWidget(switch_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
+
+        # Add the character (Ares) image on top
+        character_label = QLabel(frame)
+        character_pixmap = QPixmap("images/ares.svg")
+        character_pixmap = character_pixmap.scaled(
+            int(self.CELL_SIZE * 1),  # Scale factor for the character
+            int(self.CELL_SIZE * 1),
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation
+        )
+        character_label.setPixmap(character_pixmap)
+        character_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        character_label.setStyleSheet("border: none; background-color: transparent;")
+        layout.addWidget(character_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
 
         return frame
 
@@ -179,7 +242,7 @@ class MazeView(QWidget):
 
         layout.addWidget(image_label, 0, 0)
 
-        label_width = max(int(new_width / 1.8), 10)  # Đảm bảo tối thiểu 18
+        label_width = max(int(new_width / 1.8), 10)  
         label_height = max(int(new_height / 1.8), 10)
         
         weight_label = QLabel(str(weight), frame)
