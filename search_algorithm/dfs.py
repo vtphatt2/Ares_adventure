@@ -1,4 +1,4 @@
-from result import Result
+from model.result import Result
 
 class DFS:
     def __init__(self, input_file = ""):

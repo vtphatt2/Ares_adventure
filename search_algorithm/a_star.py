@@ -1,9 +1,9 @@
-from result import Result
+from model.result import Result
 
-class UCS:
+class A_star:
     def __init__(self, input_file = ""):
         self.input_file = input_file
-        self.result = Result(search_algo_name = "UCS")
+        self.result = Result(search_algo_name = "A*")
 
     def getResult(self):
         return self.result
