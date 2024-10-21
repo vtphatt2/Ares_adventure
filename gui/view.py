@@ -179,15 +179,17 @@ class MazeView(QWidget):
 
         layout.addWidget(image_label, 0, 0)
 
+        label_width = max(int(new_width / 1.8), 10)  # Đảm bảo tối thiểu 18
+        label_height = max(int(new_height / 1.8), 10)
+        
         weight_label = QLabel(str(weight), frame)
-        weight_size = 36  
-        weight_label.setFixedSize(QSize(weight_size, weight_size))
-        weight_label.setStyleSheet("""
+        weight_label.setFixedSize(QSize(label_width, label_height))
+        weight_label.setStyleSheet(f"""
             color: white;
-            background-color: rgba(1, 1, 1, 1);
-            border-radius: 18px;
+            font-size: {int(label_width / 2)}px;
+            background-color: rgba(1, 1, 1, 1);  
+            border-radius: {int(label_width / 2)}px;
             padding: 2px 5px;
-            font-weight: bold;
         """)
         weight_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(weight_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
