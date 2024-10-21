@@ -71,11 +71,11 @@ class MazeView(QWidget):
         elif cell == '@':
             return self.create_character_cell(row, col)
         elif cell == '$':
-            return self.create_rock_cell(row, col, weight=self.maze.stone_weights.pop(0))
+            return self.create_stone_cell(row, col, weight=self.maze.stone_weights.pop(0))
         elif cell == '.':
             return self.create_switch_cell(row, col)
         elif cell == '*':
-            return self.create_rock_on_switch_cell(row, col)
+            return self.create_stone_on_switch_cell(row, col)
         elif cell == '+':
             return self.create_character_on_switch_cell(row, col)
         else:
@@ -111,13 +111,13 @@ class MazeView(QWidget):
     def create_character_cell(self, row, col):
         return self._create_image_frame("images/ares.jpg", row, col, scale_factor=1.2)
 
-    def create_rock_cell(self, row, col, weight):
-        return self._create_rock_image_frame("images/rock.svg", row, col, scale_factor=1, weight=weight)
+    def create_stone_cell(self, row, col, weight):
+        return self._create_stone_image_frame("images/stone.svg", row, col, scale_factor=1, weight=weight)
 
     def create_switch_cell(self, row, col):
         return self._create_image_frame("images/switch.svg", row, col, scale_factor=0.6)
 
-    def create_rock_on_switch_cell(self, row, col):
+    def create_stone_on_switch_cell(self, row, col):
         frame = QFrame()
         frame.setFixedSize(self.CELL_SIZE, self.CELL_SIZE)
         style = self._get_border_style(row, col)
@@ -151,7 +151,7 @@ class MazeView(QWidget):
 
         return frame
 
-    def _create_rock_image_frame(self, image_path, row, col, scale_factor=1.0, weight=100):
+    def _create_stone_image_frame(self, image_path, row, col, scale_factor=1.0, weight=100):
         frame = QFrame()
         frame.setFixedSize(self.CELL_SIZE, self.CELL_SIZE)
         style = self._get_border_style(row, col)
