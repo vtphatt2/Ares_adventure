@@ -52,8 +52,8 @@ class MazeView(QWidget):
         self.draw_maze()
 
     def calculate_cell_size(self):
-        calculated_size_width = self.WINDOW_WIDTH / self.cols - 10
-        calculated_size_height = self.WINDOW_HEIGHT / self.rows - 10
+        calculated_size_width = self.WINDOW_WIDTH / self.cols
+        calculated_size_height = self.WINDOW_HEIGHT / self.rows
         self.CELL_SIZE = int(min(calculated_size_width, calculated_size_height))
         self.CELL_SIZE = max(self.CELL_SIZE, 10)
 
