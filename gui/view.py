@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import (
-    QWidget, QGridLayout, QFrame, QVBoxLayout, QHBoxLayout, QLabel, QApplication
+    QWidget, QGridLayout, QFrame, QVBoxLayout, QHBoxLayout, QLabel
 )
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QPixmap
@@ -11,8 +11,8 @@ class MazeView(QWidget):
     WINDOW_HEIGHT = 650
 
     # Color
-    OUTER_WALL_COLOR = "#8B4513"  # saddlebrown
-    INNER_CELL_COLOR = "transparent"
+    OUTER_WALL_COLOR = "#8B4513"        # saddlebrown
+    INNER_CELL_COLOR = "white"
     BORDER_COLOR = "black"
 
     def __init__(self, maze):
@@ -58,10 +58,17 @@ class MazeView(QWidget):
         self.CELL_SIZE = max(self.CELL_SIZE, 10)
 
     def draw_maze(self):
+        self.clear_grid_layout()
         for i, row in enumerate(self.maze.grid):
             for j, cell in enumerate(row):
                 widget = self.get_widget_for_cell(cell, i, j)
                 self.grid_layout.addWidget(widget, i, j)
+
+    def clear_grid_layout(self):
+        while self.grid_layout.count():
+            child = self.grid_layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
 
     def get_widget_for_cell(self, cell, row, col):
         if cell == '#':
@@ -71,11 +78,13 @@ class MazeView(QWidget):
         elif cell == '@':
             return self.create_character_cell(row, col)
         elif cell == '$':
-            return self.create_stone_cell(row, col, scale_factor=1, weight=self.maze.stone_weights.pop(0))
+            weight = self.maze.stones.get((row, col), 100)  
+            return self.create_stone_cell(row, col, scale_factor=1, weight=weight)
         elif cell == '.':
             return self.create_switch_cell(row, col)
         elif cell == '*':
-            return self.create_stone_on_switch_cell(row, col, scale_factor=1, weight=self.maze.stone_weights.pop(0))
+            weight = self.maze.stones.get((row, col), 100)
+            return self.create_stone_on_switch_cell(row, col, scale_factor=1, weight=weight)
         elif cell == '+':
             return self.create_character_on_switch_cell(row, col)
         else:
@@ -156,7 +165,7 @@ class MazeView(QWidget):
         stone_label.setStyleSheet("border: none; background-color: transparent;")
         layout.addWidget(stone_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
 
-        label_width = max(int(new_width / 1.8), 10)  # Đảm bảo tối thiểu 18
+        label_width = max(int(new_width / 1.8), 10)  
         label_height = max(int(new_height / 1.8), 10)
         
         weight_label = QLabel(str(weight), frame)
@@ -179,16 +188,16 @@ class MazeView(QWidget):
         style = self._get_border_style(row, col)
         frame.setStyleSheet(f"background-color: {self.INNER_CELL_COLOR}; {style}")
 
-        # Use QGridLayout to overlay widgets
+
         layout = QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         frame.setLayout(layout)
 
-        # Add the switch image
+
         switch_label = QLabel(frame)
         switch_pixmap = QPixmap("images/switch.svg")
         switch_pixmap = switch_pixmap.scaled(
-            int(self.CELL_SIZE * 0.6),  # Scale factor for the switch
+            int(self.CELL_SIZE * 0.6), 
             int(self.CELL_SIZE * 0.6),
             Qt.AspectRatioMode.KeepAspectRatio,
             Qt.TransformationMode.SmoothTransformation
@@ -198,11 +207,11 @@ class MazeView(QWidget):
         switch_label.setStyleSheet("border: none; background-color: transparent;")
         layout.addWidget(switch_label, 0, 0, Qt.AlignmentFlag.AlignCenter)
 
-        # Add the character (Ares) image on top
+
         character_label = QLabel(frame)
         character_pixmap = QPixmap("images/ares.svg")
         character_pixmap = character_pixmap.scaled(
-            int(self.CELL_SIZE * 1),  # Scale factor for the character
+            int(self.CELL_SIZE * 1),  
             int(self.CELL_SIZE * 1),
             Qt.AspectRatioMode.KeepAspectRatio,
             Qt.TransformationMode.SmoothTransformation
@@ -287,4 +296,3 @@ class MazeView(QWidget):
         frame.setLayout(layout)
 
         return frame
-

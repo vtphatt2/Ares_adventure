@@ -2,6 +2,7 @@ import sys
 import os
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QComboBox, QPushButton
 from model.maze import Maze
+from model.result import Result
 from gui.view import MazeView
 from controller.controller import MazeController
 import re
@@ -78,9 +79,9 @@ class MainWindow(QWidget):
 
     def start_simulation(self):
         if self.current_maze:
-            controller = MazeController(self.current_maze, self.current_view)
-            actions = "rrdllu" 
-            controller.run_sequence(actions)
+            result = Result("BFS", 5, 30, 300, 30.0, 30.0, "uLulDrrRRRRR")  # fake result
+            self.controller = MazeController(self.current_maze, self.current_view, result)
+            self.controller.run_sequence()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
