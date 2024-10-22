@@ -1,8 +1,8 @@
 class Result:
-    def __init__(self, search_algo_name = "", steps = 0, weight = 0, node = 0, time = 0.00, memory = 0.00, sequence_of_actions = ""):
+    def __init__(self, search_algo_name = "", steps = 0, cost = 0, node = 0, time = 0.00, memory = 0.00, sequence_of_actions = ""):
         self.search_algo_name = search_algo_name        # for example : BFS
         self.steps = steps                              # for example : 16
-        self.weight = weight                            # for example : 695
+        self.cost = cost                            # for example : 695
         self.node = node                                # for example : 4321
         self.time = time                                # unit : ms, for example : 58.12
         self.memory = memory                            # unit : MB, for example : 12.56
@@ -14,13 +14,13 @@ class Result:
         Save the result to a file as format:
 
         BFS
-        Steps: 16, Weight: 695, Node: 4321, Time (ms): 58.12, Memory (MB): 12.56
+        Steps: 16, Cost: 695, Node: 4321, Time (ms): 58.12, Memory (MB): 12.56
         uLulDrrRRRRRRurD
         """
 
         with open(filepath, mode) as f:
             f.write(self.search_algo_name + "\n")
-            f.write(f"Steps: {self.steps}, Weight: {self.weight}, Node: {self.node}, Time (ms): {self.time}, Memory (MB): {self.memory}\n")
+            f.write(f"Steps: {self.steps}, Cost: {self.cost}, Node: {self.node}, Time (ms): {self.time}, Memory (MB): {self.memory}\n")
             f.write(self.sequence_of_actions + "\n")
 
     # all getters and setters
@@ -36,11 +36,11 @@ class Result:
     def set_steps(self, steps):
         self.steps = steps
 
-    def get_weight(self):
-        return self.weight
+    def get_cost(self):
+        return self.cost
     
-    def set_weight(self, weight):
-        self.weight = weight
+    def set_cost(self, cost):
+        self.cost = cost
     
     def get_node(self):
         return self.node

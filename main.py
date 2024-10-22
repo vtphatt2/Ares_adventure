@@ -10,7 +10,7 @@ import re
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Ares's Adventure")
+        self.setWindowTitle("Ares's Adventure") 
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
