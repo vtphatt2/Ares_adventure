@@ -8,7 +8,7 @@ from PyQt6.QtGui import QPixmap
 class MazeView(QWidget):
     # Window size
     WINDOW_WIDTH = 1300
-    WINDOW_HEIGHT = 650
+    WINDOW_HEIGHT = 660
 
     # Color
     OUTER_WALL_COLOR = "#8B4513"        # saddlebrown
@@ -258,7 +258,7 @@ class MazeView(QWidget):
         weight_label.setFixedSize(QSize(label_width, label_height))
         weight_label.setStyleSheet(f"""
             color: white;
-            font-size: {int(label_width / 2)}px;
+            font-size: {int(label_width / 3)}px;
             background-color: rgba(1, 1, 1, 1);  
             border-radius: {int(label_width / 2)}px;
             padding: 2px 5px;
