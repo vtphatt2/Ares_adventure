@@ -6,6 +6,10 @@ from model.result import Result
 from gui.view import MazeView
 from controller.controller import MazeController
 import re
+from search_algorithm.bfs import BFS
+from search_algorithm.dfs import DFS
+from search_algorithm.ucs import UCS
+from search_algorithm.a_star import A_star
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -102,9 +106,25 @@ class MainWindow(QWidget):
 
             print(f"Running {algorithm_name} on {file_path}")
 
-            # result = Result("BFS", 5, 30, 300, 30.0, 30.0, "uLulDrrRRRRR")  # fake result
-            # self.controller = MazeController(self.current_maze, self.current_view, result)
-            # self.controller.run_sequence()
+            if (algorithm_name == "BFS"):
+                bfs = BFS(file_path)
+                bfs.run()
+                result = bfs.get_result()
+            elif (algorithm_name == "DFS"):
+                dfs = DFS(file_path)
+                dfs.run()
+                result = dfs.get_result()
+            elif (algorithm_name == "UCS"):
+                ucs = UCS(file_path)
+                ucs.run()
+                result = ucs.get_result()
+            elif (algorithm_name == "A*"):
+                a_star = A_star(file_path)
+                a_star.run()
+                result = a_star.get_result()
+
+            self.controller = MazeController(self.current_maze, self.current_view, result)
+            self.controller.run_sequence()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
