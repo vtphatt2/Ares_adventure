@@ -7,7 +7,7 @@ class Result:
         self.time = time                                # unit : ms, for example : 58.12
         self.memory = memory                            # unit : MB, for example : 12.56
         self.sequence_of_actions = sequence_of_actions  # for example : uLulDrrRRRRRRurD
-        self.weight_steps = []                          # for example : [0, 3, 10, 15, 30, 32]
+        self.cost_steps = []                          # for example : [0, 3, 10, 15, 30, 32]
 
     def save(self, filepath = "", mode = "a"):
         """
@@ -36,11 +36,17 @@ class Result:
     def set_steps(self, steps):
         self.steps = steps
 
-    def get_cost(self):
+    def get_total_cost(self):
         return self.cost
     
-    def set_cost(self, cost):
+    def set_total_cost(self, cost):
         self.cost = cost
+    
+    def get_cost_steps(self):
+        return self.cost_steps
+    
+    def set_cost_steps(self, cost_steps):
+        self.cost_steps = cost_steps
     
     def get_node(self):
         return self.node
@@ -65,9 +71,3 @@ class Result:
     
     def set_sequence_of_actions(self, sequence_of_actions):
         self.sequence_of_actions = sequence_of_actions
-
-    def get_weight_steps(self):
-        return self.weight_steps
-    
-    def set_weight_steps(self, weight_steps):
-        self.weight_steps = weight_steps
