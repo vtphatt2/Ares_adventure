@@ -1,0 +1,24 @@
+BFS
+Steps: 23, Cost: 38, Node: 376724, Time (ms): 4109.098434448242, Memory (MB): 222932992
+llldRRRuuullluRRurDRurD
+BFS
+Steps: 23, Cost: 38, Node: 376724, Time (ms): 3682.384967803955, Memory (MB): 0.00026702880859375
+llldRRRuuullluRRurDRurD
+BFS
+Steps: 23, Cost: 56, Node: 196590, Time (ms): 1902.8120040893555, Memory (MB): 0.00026702880859375
+llldRRRRRuuuurDullLLulD
+BFS
+Steps: 26, Cost: 41, Node: 366388, Time (ms): 1707.6265811920166, Memory (MB): 0.00026702880859375
+dldlluRRRuuullluRRurDrRurD
+BFS
+Steps: 23, Cost: 56, Node: 196590, Time (ms): 838.9418125152588, Memory (MB): 0.00026702880859375
+llldRRRRRuuuurDullLLulD
+BFS
+Steps: 26, Cost: 41, Node: 353635, Time (ms): 1657.06205368042, Memory (MB): 0.00026702880859375
+dldlluRRRuuullluRRurDrRurD
+BFS
+Steps: 26, Cost: 41, Node: 353635, Time (ms): 1704.3836116790771, Memory (MB): 0.00026702880859375
+dldlluRRRuuullluRRurDrRurD
+BFS
+Steps: 26, Cost: 41, Node: 353635, Time (ms): 8047.622919082642, Memory (MB): 0.00026702880859375
+dldlluRRRuuullluRRurDrRurD

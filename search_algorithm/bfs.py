@@ -1,6 +1,6 @@
 import time
 from collections import deque
-import psutil
+import sys
 from model.result import Result
 
 def get_start_state(input_file = ""):
@@ -63,10 +63,10 @@ class BFS:
     
     def run(self):
         if self.start_state == -1:
-            #TODO: Notify for user that the input file is not found (GUI)
             return
-        # Start timing
+        
         start_time = time.time()
+        start_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
 
         start_state = (self.start_state['ares'], tuple(self.start_state['stones']))
         queue = deque([start_state])
@@ -94,13 +94,15 @@ class BFS:
                     queue.append(neighbor_state)
                     parent_map[neighbor_state] = (current_state, action)
                     
-        # End timing
+                # print(f"Ares: {ares_position}, Stones: {stone_positions}, Action: {action}")
+        
         end_time = time.time()
-        # Convert to milliseconds
-        elapsed_time_ms = (end_time - start_time) * 1000  
-        self.result.set_time(elapsed_time_ms)
-        self.result.set_memory(self.calculate_memory())
+        end_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
+
+        self.result.set_time((end_time - start_time) * 1000)
+        self.result.set_memory((end_memory - start_memory) / (1024 * 1024))  # Convert to MB
         self.result.set_node(nodes_generated)
+        self.result.save("outputs/bfs_result.txt")
 
     def find_cost_each_step(self, path):
         total_cost = 0
@@ -160,6 +162,7 @@ class BFS:
                 new_stone_positions[stone_index] = new_stone_position
                 new_state = (new_ares_position, tuple(new_stone_positions))
                 neighbors.append((new_state, action.upper()))
+                print(f"Pushing stone from {new_ares_position} to {new_stone_position}")
         return neighbors
     
     def is_valid_move(self, position, stone_positions):
@@ -177,9 +180,4 @@ class BFS:
             current_state, action = parent_map[current_state]
             path.append(action)
         # The path is constructed in reverse (from goal to start), path[::-1] reverse it at the end
-        return path[::-1]
-             
-    def calculate_memory(self):
-        process = psutil.Process()
-        memory_info = process.memory_info()
-        return memory_info.rss  # Resident Set Size: the non-swapped physical memory the process has used
+        return ''.join(path[::-1])
