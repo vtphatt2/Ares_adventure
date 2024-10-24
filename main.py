@@ -1,8 +1,7 @@
 import sys
 import os
-from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QComboBox, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QComboBox, QPushButton, QLabel
 from model.maze import Maze
-from model.result import Result
 from gui.view import MazeView
 from controller.controller import MazeController
 import re
@@ -37,10 +36,24 @@ class MainWindow(QWidget):
         # Add the horizontal layout to the main vertical layout
         self.layout.addLayout(self.top_layout)
 
+        # Horizontal layout for the Start and Reset buttons
+        self.button_layout = QHBoxLayout()
+
         # Button to start the simulation
         self.start_button = QPushButton("Start")
         self.start_button.clicked.connect(self.start_simulation)  # Connect to event handler
-        self.layout.addWidget(self.start_button)  # Add button to the main layout
+        self.button_layout.addWidget(self.start_button)  # Add Start button to button layout
+
+        # Button to reset the simulation
+        self.reset_button = QPushButton("Reset")
+        self.reset_button.clicked.connect(self.reset_simulation)  # Connect to event handler
+        self.button_layout.addWidget(self.reset_button)  # Add Reset button to button layout
+
+        # Add the button layout to the main layout
+        self.layout.addLayout(self.button_layout)
+
+        self.custom_text = QLabel("Step 0 --- Total cost : 0")  
+        self.layout.addWidget(self.custom_text)
 
         # Initialize maze and its view
         self.current_maze = None
@@ -57,7 +70,6 @@ class MainWindow(QWidget):
             f for f in os.listdir(inputs_dir)
             if f.endswith(".txt") and self.is_valid_input_file(os.path.join(inputs_dir, f))
         ]
-        files = [f for f in os.listdir(inputs_dir) if f.endswith(".txt") and self.is_valid_input_file(os.path.join(inputs_dir, f))]
         files.sort()
         self.file_selector.addItems(files)
 
@@ -106,25 +118,28 @@ class MainWindow(QWidget):
 
             print(f"Running {algorithm_name} on {file_path}")
 
-            if (algorithm_name == "BFS"):
+            if algorithm_name == "BFS":
                 bfs = BFS(file_path)
                 bfs.run()
                 result = bfs.get_result()
-            elif (algorithm_name == "DFS"):
+            elif algorithm_name == "DFS":
                 dfs = DFS(file_path)
                 dfs.run()
                 result = dfs.get_result()
-            elif (algorithm_name == "UCS"):
+            elif algorithm_name == "UCS":
                 ucs = UCS(file_path)
                 ucs.run()
                 result = ucs.get_result()
-            elif (algorithm_name == "A*"):
+            elif algorithm_name == "A*":
                 a_star = A_star(file_path)
                 a_star.run()
                 result = a_star.get_result()
 
-            self.controller = MazeController(self.current_maze, self.current_view, result)
+            self.controller = MazeController(self.current_maze, self.current_view, result, self.custom_text)
             self.controller.run_sequence()
+
+    def reset_simulation(self):
+        self.load_maze_from_selected_file(self.file_selector.currentText())
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
