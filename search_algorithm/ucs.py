@@ -132,5 +132,5 @@ class UCS:
         self.result.set_memory((end_memory - start_memory) / (1024 * 1024))  # Convert to MB
         self.result.save("ucs_result.txt")
 
-    def getResult(self):
+    def get_result(self):
         return self.result
