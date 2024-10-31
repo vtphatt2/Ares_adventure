@@ -1,6 +1,6 @@
 import time
-import sys
 from collections import deque
+from model.memory import MemoryTracker
 from model.result import Result
 
 class DFS:
@@ -66,7 +66,7 @@ class DFS:
             return
     
         start_time = time.time()
-        start_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
+        memory_tracker = MemoryTracker()
 
         start_state = (self.start_state['ares'], tuple(self.start_state['stones']), frozenset())
         stack = [start_state]
@@ -96,12 +96,13 @@ class DFS:
                     parent_map[neighbor_state] = (current_state, action)
 
         end_time = time.time()
-        end_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
 
         self.result.set_time((end_time - start_time) * 1000)
-        self.result.set_memory((end_memory - start_memory) / (1024 * 1024))  # Convert to MB
+        self.result.set_memory(memory_tracker.peak_memory_usage())  # Convert to MB
         self.result.set_node(nodes_generated)
         self.result.save("outputs/dfs_result.txt")
+
+        memory_tracker.stop_tracking()
 
     def get_neighbors(self, state):
         neighbors = []
