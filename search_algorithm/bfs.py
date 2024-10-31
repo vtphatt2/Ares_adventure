@@ -1,6 +1,6 @@
 import time
 from collections import deque
-import sys
+from model.memory import MemoryTracker
 from model.result import Result
 
 class BFS:
@@ -67,7 +67,9 @@ class BFS:
             return
         
         start_time = time.time()
-        start_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
+
+         # Initialize memory tracker
+        memory_tracker = MemoryTracker()
 
         start_state = (self.start_state['ares'], tuple(self.start_state['stones']))
         queue = deque([start_state])
@@ -97,12 +99,19 @@ class BFS:
                     parent_map[neighbor_state] = (current_state, action)
         
         end_time = time.time()
-        end_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
+
+        # Display memory usage details
+        print("Memory usage at start:", memory_tracker.get_memory_usage())
+        print("Memory usage at end:", memory_tracker.get_memory_usage())
+        print("Peak memory usage during execution:", memory_tracker.peak_memory_usage(), "MB")
 
         self.result.set_time((end_time - start_time) * 1000)
-        self.result.set_memory((end_memory - start_memory) / (1024 * 1024))  # Convert to MB
+        self.result.set_memory(memory_tracker.peak_memory_usage())  # Convert to MB
         self.result.set_node(nodes_generated)
         self.result.save("outputs/bfs_result.txt")
+
+        # Stop memory tracking
+        memory_tracker.stop_tracking()
 
     def get_neighbors(self, state):
         neighbors = []

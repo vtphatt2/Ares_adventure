@@ -238,3 +238,12 @@ uuruRurDulllllDldRRlldddRRR
 BFS
 Steps: 23, Cost: 56, Node: 492735, Time (ms): 4458.718299865723, Memory (MB): 0.00026702880859375
 llldRRRRRuuuurDullLLulD
+BFS
+Steps: 23, Cost: 56, Node: 492735, Time (ms): 9917.49358177185, Memory (MB): <bound method MemoryTracker.peak_memory_usage of <model.memory.MemoryTracker object at 0x0000014355DE4F50>>
+llldRRRRRuuuurDullLLulD
+BFS
+Steps: 23, Cost: 56, Node: 492735, Time (ms): 9337.468385696411, Memory (MB): <bound method MemoryTracker.peak_memory_usage of <model.memory.MemoryTracker object at 0x000001C3BCD44F20>>
+llldRRRRRuuuurDullLLulD
+BFS
+Steps: 23, Cost: 56, Node: 492735, Time (ms): 8968.22452545166, Memory (MB): 217.85924911499023
+llldRRRRRuuuurDullLLulD
