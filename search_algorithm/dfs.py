@@ -57,7 +57,7 @@ class DFS:
             'maze': tuple(maze),
             'cost': 0
         }
-
+    
     def get_result(self):
         return self.result
     
@@ -68,7 +68,7 @@ class DFS:
         start_time = time.time()
         start_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
 
-        start_state = (self.start_state['ares'], tuple(self.start_state['stones']))
+        start_state = (self.start_state['ares'], tuple(self.start_state['stones']), frozenset())
         stack = [start_state]
         visited = set([start_state])
         parent_map = {start_state: None}
@@ -76,10 +76,10 @@ class DFS:
 
         while stack:
             current_state = stack.pop()
-            ares_position, stone_positions = current_state
+            ares_position, stone_positions, locked_stones = current_state
             nodes_generated += 1
 
-            if all(stone in self.start_state['switches'] for stone in stone_positions):
+            if all(stone in self.start_state['switches'] for stone in stone_positions) and len(locked_stones) == len(stone_positions):
                 print("Goal reached!")
                 path = self.reconstruct_path(current_state, parent_map)
                 self.result.set_sequence_of_actions(path)
@@ -105,23 +105,32 @@ class DFS:
 
     def get_neighbors(self, state):
         neighbors = []
-        ares_position, stone_positions = state
+        ares_position, stone_positions, locked_stones = state
         directions = {'u': (0, -1), 'l': (-1, 0), 'd': (0, 1), 'r': (1, 0)}
         for action, (dx, dy) in directions.items():
             new_ares_position = (ares_position[0] + dx, ares_position[1] + dy)
             # Move Ares without pushing a stone
             if self.is_valid_move(new_ares_position, stone_positions):
-                new_state = (new_ares_position, stone_positions)
+                new_state = (new_ares_position, stone_positions, locked_stones)
                 neighbors.append((new_state, action))
             # Check if the stone can be pushed
             elif new_ares_position in stone_positions:
                 stone_index = stone_positions.index(new_ares_position)
+
+                if stone_positions[stone_index] in locked_stones:
+                    continue  # Skip moving locked stones
+
                 new_stone_position = (new_ares_position[0] + dx, new_ares_position[1] + dy)
 
                 if self.is_valid_move(new_stone_position, stone_positions):
                     new_stone_positions = list(stone_positions)
                     new_stone_positions[stone_index] = new_stone_position
-                    new_state = (new_ares_position, tuple(new_stone_positions))
+                    new_locked_stones = set(locked_stones)
+
+                    if new_stone_position in self.start_state['switches']:
+                        new_locked_stones.add(new_stone_position)
+
+                    new_state = (new_ares_position, tuple(new_stone_positions), frozenset(new_locked_stones))
                     neighbors.append((new_state, action.upper()))
 
         return neighbors
