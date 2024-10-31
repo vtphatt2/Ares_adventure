@@ -63,8 +63,10 @@ class A_star:
         return self.result
     
     def heuristic(self, state):
-        _, stone_positions = state
-        return sum(min(abs(stone[0] - switch[0]) + abs(stone[1] - switch[1]) for switch in self.start_state['switches']) for stone in stone_positions)
+        ares_position, stone_positions = state
+        stone_to_switch_distance = sum(min(abs(stone[0] - switch[0]) + abs(stone[1] - switch[1]) for switch in self.start_state['switches']) for stone in stone_positions)
+        ares_to_stone_distance = min(abs(ares_position[0] - stone[0]) + abs(ares_position[1] - stone[1]) for stone in stone_positions)
+        return stone_to_switch_distance + ares_to_stone_distance
 
     def run(self):
         if self.start_state == -1:
@@ -85,6 +87,9 @@ class A_star:
             _, current_state = heapq.heappop(frontier)
             ares_position, stone_positions = current_state
             nodes_generated += 1
+            if current_state in visited:
+                continue
+            visited.add(current_state)
 
             if all(stone in self.start_state['switches'] for stone in stone_positions):
                 path = self.reconstruct_path(current_state, parent_map)
@@ -96,7 +101,7 @@ class A_star:
                 break
                 
             for neighbor_state, action in self.get_neighbors(current_state):
-                new_cost = cost_so_far[current_state] + 1  # Assuming each move costs 1
+                new_cost = cost_so_far[current_state] + 1
                 if neighbor_state not in cost_so_far or new_cost < cost_so_far[neighbor_state]:
                     cost_so_far[neighbor_state] = new_cost
                     priority = new_cost + self.heuristic(neighbor_state)
@@ -128,7 +133,6 @@ class A_star:
                 dx, dy = directions[action]
                 ares_position = (ares_position[0] + dx, ares_position[1] + dy)
                 total_cost += 1  # Each move costs 1
-                continue
             
             else:  # Stone push
                 direction = action.lower()  # Push in the same direction, but action is uppercase
@@ -166,21 +170,19 @@ class A_star:
                 stone_index = stone_positions.index(new_ares_position)
                 new_stone_position = (new_ares_position[0] + dx, new_ares_position[1] + dy)
 
-                if not self.is_valid_move(new_stone_position, stone_positions):
-                    continue
+                if self.is_valid_move(new_stone_position, stone_positions):
+                    new_stone_positions = list(stone_positions)
+                    new_stone_positions[stone_index] = new_stone_position
+                    new_state = (new_ares_position, tuple(new_stone_positions))
+                    neighbors.append((new_state, action.upper()))
 
-                new_stone_positions = list(stone_positions)
-                new_stone_positions[stone_index] = new_stone_position
-                new_state = (new_ares_position, tuple(new_stone_positions))
-                neighbors.append((new_state, action.upper()))
-                print(f"Pushing stone from {new_ares_position} to {new_stone_position}")
         return neighbors
     
-    def is_valid_move(self, position, stone_positions):
+    def is_valid_move(self, position, stone_positions_set):
         x, y = position
-        if self.start_state['maze'][x][y] == '#': # Prevent moving into wall
+        if self.start_state['maze'][y][x] == '#': # Prevent moving into wall
             return False
-        if position in stone_positions: # Prevent pushing a stone into another stone
+        if position in stone_positions_set: # Prevent pushing a stone into another stone
             return False
         return True
 
