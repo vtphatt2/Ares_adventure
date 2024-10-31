@@ -7,3 +7,42 @@ rrrruullllldldldRRRRRllllluurrrrrrrddLruulllldldlluurururRRdrrdddlLrruullldldRRl
 DFS
 Steps: 149, Cost: 182, Node: 27125, Time (ms): 71.62833213806152, Memory (MB): 0.00026702880859375
 rrrruullllldldldRRRllluurrrrrrruullLrrrddddllulldllluurruuRRRdrrdddllulldllluurruruullDrrrrdrrdddllulldllluuuRRdrrrrruuLrddddllulldllluurruurrRurDrdL
+DFS
+Steps: 0, Cost: 0, Node: 376, Time (ms): 7.749080657958984, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 0, Cost: 0, Node: 376, Time (ms): 4.782915115356445, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 96, Cost: 139, Node: 55745, Time (ms): 171.1595058441162, Memory (MB): 0.00026702880859375
+rrrruullLrrrdddlllllulldRRRllluurrrrrrruullllDrrrrdddllulldllluuuRRRRRdrruLLLLulDDldRRRRdrruLdlU
+DFS
+Steps: 0, Cost: 0, Node: 12679, Time (ms): 36.017417907714844, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 0, Cost: 0, Node: 376, Time (ms): 8.38780403137207, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 0, Cost: 0, Node: 376, Time (ms): 0.0, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 96, Cost: 129, Node: 7140, Time (ms): 20.761728286743164, Memory (MB): 0.00026702880859375
+rrrruullLrrrddllllllldRRRllluurrrrrrruullllllDrRRRllllldRRllddrrrurrrruuLrddllllllluurrrrRurDrdL
+DFS
+Steps: 0, Cost: 0, Node: 376, Time (ms): 5.2356719970703125, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 0, Cost: 0, Node: 12679, Time (ms): 35.82119941711426, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 0, Cost: 0, Node: 4825, Time (ms): 15.676498413085938, Memory (MB): 0.00026702880859375
+
+DFS
+Steps: 111, Cost: 148, Node: 50127, Time (ms): 160.9213352203369, Memory (MB): 0.00026702880859375
+rrrrruuuulLddlLrruuuRldddlluRldddrrrruuuulluullllddddRRlluuuurrrrdrdrddddlllllUruuuRRuullllddddRluuuurrrrddlldD
+DFS
+Steps: 96, Cost: 139, Node: 55745, Time (ms): 188.50111961364746, Memory (MB): 0.00026702880859375
+rrrruullLrrrdddlllllulldRRRllluurrrrrrruullllDrrrrdddllulldllluuuRRRRRdrruLLLLulDDldRRRRdrruLdlU
+DFS
+Steps: 101, Cost: 148, Node: 50166, Time (ms): 151.5505313873291, Memory (MB): 0.00026702880859375
+rrrrruuuulLddlLrruuuRdrddddlllluuuRdlddrrrruuuulluullllddddRRddlUruuuRRuullllddddRdrUlluuuurrrrddllDD
