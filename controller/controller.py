@@ -103,7 +103,6 @@ class MazeController:
             print(f"Executing action: {action}")
             self.move_ares(action)
 
-            # Cập nhật nội dung của nhãn
             total_cost = self.result.get_cost_steps()[self.step_index]
             self.label.setText(f"Step {self.step_index + 1} --- Total cost: {total_cost}")
 
