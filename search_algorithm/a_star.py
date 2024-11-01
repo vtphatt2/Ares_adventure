@@ -1,9 +1,7 @@
 import time
-from collections import deque
-import sys
 import heapq
 from model.result import Result
-import os
+from model.memory import MemoryTracker
 
 def get_start_state(input_file = ""):
     if input_file == "":
@@ -64,16 +62,22 @@ class A_star:
     
     def heuristic(self, state):
         ares_position, stone_positions = state
-        stone_to_switch_distance = sum(min(abs(stone[0] - switch[0]) + abs(stone[1] - switch[1]) for switch in self.start_state['switches']) for stone in stone_positions)
+        stone_weights = self.start_state['stone_weights']
+        
+        stone_to_switch_distance = sum(
+            min(abs(stone[0] - switch[0]) + abs(stone[1] - switch[1]) for switch in self.start_state['switches']) * stone_weights[i]
+            for i, stone in enumerate(stone_positions)
+        )
         ares_to_stone_distance = min(abs(ares_position[0] - stone[0]) + abs(ares_position[1] - stone[1]) for stone in stone_positions)
         return stone_to_switch_distance + ares_to_stone_distance
 
     def run(self):
         if self.start_state == -1:
             return
-        
         start_time = time.time()
-        start_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
+        
+        # Initialize memory tracker
+        memory_tracker = MemoryTracker()
 
         start_state = (self.start_state['ares'], tuple(self.start_state['stones']))
         frontier = []
@@ -100,25 +104,31 @@ class A_star:
                 self.result.set_total_cost(total_cost)
                 break
                 
-            for neighbor_state, action in self.get_neighbors(current_state):
+            for neighbor_state, action, stone_weight in self.get_neighbors(current_state):
                 new_cost = cost_so_far[current_state] + 1
-                if neighbor_state not in cost_so_far or new_cost < cost_so_far[neighbor_state]:
-                    cost_so_far[neighbor_state] = new_cost
-                    priority = new_cost + self.heuristic(neighbor_state)
-                    heapq.heappush(frontier, (priority, neighbor_state))
-                    parent_map[neighbor_state] = (current_state, action)
+                if action.isupper():  # If Ares pushes a stone, add the stone weight to the cost
+                    new_cost += stone_weight
+                if neighbor_state not in visited:
+                    if neighbor_state not in cost_so_far or new_cost < cost_so_far[neighbor_state]:
+                        cost_so_far[neighbor_state] = new_cost
+                        priority = new_cost + self.heuristic(neighbor_state)
+                        heapq.heappush(frontier, (priority, neighbor_state))
+                        parent_map[neighbor_state] = (current_state, action)
                     
         end_time = time.time()
-        end_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
-        
-        # Ensure the directory exists
-        output_dir = "outputs"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+
+        # Display memory usage details
+        print("Memory usage at start:", memory_tracker.get_memory_usage())
+        print("Memory usage at end:", memory_tracker.get_memory_usage())
+        print("Peak memory usage during execution:", memory_tracker.peak_memory_usage(), "MB")
+
         self.result.set_time((end_time - start_time) * 1000)
-        self.result.set_memory((end_memory - start_memory) / (1024 * 1024))  # Convert to MB
+        self.result.set_memory(memory_tracker.peak_memory_usage())  # Convert to MB
         self.result.set_node(nodes_generated)
-        self.result.save(os.path.join(output_dir, "A_star_result.txt"))
+        self.result.save("outputs/A_star_result.txt")
+
+        # Stop memory tracking
+        memory_tracker.stop_tracking()
 
     def find_cost_each_step(self, path):
         total_cost = 0
@@ -158,13 +168,14 @@ class A_star:
     def get_neighbors(self, state):
         neighbors = []
         ares_position, stone_positions = state
+        stone_weight = 0
         directions = {'u': (0, -1), 'l': (-1, 0), 'd': (0, 1), 'r': (1, 0)}
         for action, (dx, dy) in directions.items():
             new_ares_position = (ares_position[0] + dx, ares_position[1] + dy)
             # Move Ares without pushing a stone
             if self.is_valid_move(new_ares_position, stone_positions):
                 new_state = (new_ares_position, stone_positions)
-                neighbors.append((new_state, action))
+                neighbors.append((new_state, action, stone_weight))
             # Check if the stone can be pushed
             elif new_ares_position in stone_positions:
                 stone_index = stone_positions.index(new_ares_position)
@@ -174,7 +185,8 @@ class A_star:
                     new_stone_positions = list(stone_positions)
                     new_stone_positions[stone_index] = new_stone_position
                     new_state = (new_ares_position, tuple(new_stone_positions))
-                    neighbors.append((new_state, action.upper()))
+                    stone_weight = self.start_state['stone_weights'][stone_index]
+                    neighbors.append((new_state, action.upper(), stone_weight))
 
         return neighbors
     
