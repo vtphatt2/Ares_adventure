@@ -1,0 +1,39 @@
+BFS
+Steps: 16, Cost: 24, Node: 46, Time (ms): 0.98419189453125, Memory (MB): 0.007956504821777344
+rrrrrrrrRRRRRRRR
+BFS
+Steps: 0, Cost: 0, Node: 525, Time (ms): 7.319927215576172, Memory (MB): 0.06022834777832031
+
+BFS
+Steps: 0, Cost: 0, Node: 525, Time (ms): 5.9719085693359375, Memory (MB): 0.06022834777832031
+
+BFS
+Steps: 0, Cost: 0, Node: 525, Time (ms): 8.30698013305664, Memory (MB): 0.145233154296875
+
+BFS
+Steps: 0, Cost: 0, Node: 11096, Time (ms): 84.78903770446777, Memory (MB): 3.1265506744384766
+
+BFS
+Steps: 51, Cost: 68, Node: 13793, Time (ms): 101.43709182739258, Memory (MB): 3.4574146270751953
+rrrrrrrrRRRRRRRRllddllllLLLLLLLLrrrrrrruulllllllldD
+BFS
+Steps: 62, Cost: 81, Node: 26039, Time (ms): 164.10303115844727, Memory (MB): 7.999688148498535
+rrrrrrrrRRRRRRRRllddllllLLLLLLLLrrrrrrruulllllllldDrddrrrrrrRR
+BFS
+Steps: 85, Cost: 106, Node: 3597456, Time (ms): 29489.089012145996, Memory (MB): 947.5410919189453
+rrrrrrrrRRRRRRRRllddllllLLLLLLLLrrrrrrruulllllllldDrddrrrrrrRRllllllllllddrrrrrdDlluR
+BFS
+Steps: 84, Cost: 108, Node: 26484, Time (ms): 167.04177856445312, Memory (MB): 7.924557685852051
+rrrrrrrrRRRRRRRRllllllllllllllllddrrrrrrrrRRRRRRRRllllllllllllllllddrrrrrrrrRRRRRRRR
+BFS
+Steps: 52, Cost: 68, Node: 6638, Time (ms): 64.31198120117188, Memory (MB): 1.9759550094604492
+rrrrrrrrRRRRRRRRllllllllllllllllddddrrrrrrrrRRRRRRRR
+BFS
+Steps: 116, Cost: 154, Node: 589459, Time (ms): 3379.769802093506, Memory (MB): 138.4826421737671
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllddrrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
+BFS
+Steps: 120, Cost: 162, Node: 2602420, Time (ms): 19447.432041168213, Memory (MB): 715.2519073486328
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
+BFS
+Steps: 120, Cost: 162, Node: 1681551, Time (ms): 11183.234930038452, Memory (MB): 441.82697200775146
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
