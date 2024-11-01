@@ -118,7 +118,6 @@ class UCS:
         path, nodes_visited, total_cost, cost_steps, max_frontier_size = self.ucs(initial_state, stone_weights)
         
         end_time = time.time()
-        end_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
 
         if path:
             self.result.set_steps(len(path))
