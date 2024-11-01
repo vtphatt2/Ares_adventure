@@ -130,7 +130,6 @@ class UCS:
 
         self.result.set_time((end_time - start_time) * 1000)  # Convert to milliseconds
         self.result.set_memory((end_memory - start_memory) / (1024 * 1024))  # Convert to MB
-        self.result.save("outputs/ucs_result.txt")
 
     def get_result(self):
         return self.result

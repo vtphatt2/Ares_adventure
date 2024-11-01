@@ -122,7 +122,6 @@ class A_star:
         self.result.set_time((end_time - start_time) * 1000)
         self.result.set_memory(memory_tracker.peak_memory_usage())  # Convert to MB
         self.result.set_node(nodes_generated)
-        self.result.save("outputs/A_star_result.txt")
 
         # Stop memory tracking
         memory_tracker.stop_tracking()
