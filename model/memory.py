@@ -18,7 +18,7 @@ class MemoryTracker:
         return {
             'rss': memory_info.rss / (1024 * 1024),      # Physical memory in MB
             'vms': memory_info.vms / (1024 * 1024),      # Virtual memory in MB
-            'shared': memory_info.shared / (1024 * 1024) # Shared memory in MB
+            # 'shared': memory_info.shared / (1024 * 1024) # Shared memory in MB
         }
 
     def compare_snapshots(self, snapshot1, snapshot2, top=10):
