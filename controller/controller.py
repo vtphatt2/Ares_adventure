@@ -3,7 +3,7 @@ from PyQt6.QtCore import QTimer, QObject, pyqtSignal
 class MazeController(QObject):
     finished = pyqtSignal()
 
-    def __init__(self, maze, view, result, label):
+    def __init__(self, maze, view, result, label):  
         super().__init__()  # Initialize QObject
         self.maze = maze
         self.view = view
@@ -11,8 +11,12 @@ class MazeController(QObject):
         self.label = label
         self.ares_position = maze.get_start_position()
         self.step_index = 0
+        
+        self.base_interval = 500  
+        self.speed_multiplier = 1.0 
+
         self.timer = QTimer()
-        self.timer.setInterval(500)  # 500 ms interval
+        self.timer.setInterval(int(self.base_interval / self.speed_multiplier))  
         self.timer.timeout.connect(self.run_sequence)
 
     def move_ares(self, action):
@@ -123,3 +127,13 @@ class MazeController(QObject):
         if self.timer.isActive():
             self.timer.stop()
             self.finished.emit()
+    
+    def set_speed(self, multiplier):
+        if multiplier <= 0:
+            print("Speed multiplier must be positive.")
+            return
+        self.speed_multiplier = multiplier
+        new_interval = int(self.base_interval / self.speed_multiplier)
+        self.timer.setInterval(new_interval)
+        print(f"Speed set to x{self.speed_multiplier}, Timer interval adjusted to {new_interval} ms.")
+

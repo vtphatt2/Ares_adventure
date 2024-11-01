@@ -40,7 +40,7 @@ class MainWindow(QWidget):
         # Add the horizontal layout to the main vertical layout
         self.layout.addLayout(self.top_layout)
 
-        # Horizontal layout for the Start and Reset buttons
+        # Horizontal layout for the Start, Reset buttons and Speed selector
         self.button_layout = QHBoxLayout()
 
         # Button to start the simulation
@@ -52,6 +52,16 @@ class MainWindow(QWidget):
         self.reset_button = QPushButton("Reset")
         self.reset_button.clicked.connect(self.reset_simulation)  # Connect to event handler
         self.button_layout.addWidget(self.reset_button)  # Add Reset button to button layout
+
+        # Add Speed ComboBox next to Reset button
+        self.speed_selector = QComboBox()
+        self.speed_selector.addItems(["x1.0", "x2.0", "x3.0", "x4.0", "x5.0", "x6.0", "x7.0", "x8.0", 
+                                      "x9.0", "x10.0", "x12.0", "x15.0", "x18.0", "x20.0", "x25.0", "x30.0",
+                                      "x40.0", "x50.0"])  # Add speed options
+        self.speed_selector.setCurrentIndex(0)  # Set default selection to "x1.5"
+        self.speed_selector.currentTextChanged.connect(self.change_speed)  # Connect to handler
+        self.button_layout.addWidget(QLabel("Speed:"))  # Optional label for clarity
+        self.button_layout.addWidget(self.speed_selector)  # Add Speed selector to button layout
 
         # Add the button layout to the main layout
         self.layout.addLayout(self.button_layout)
@@ -155,6 +165,12 @@ class MainWindow(QWidget):
 
             self.controller = MazeController(self.current_maze, self.current_view, result, self.custom_text)
             self.controller.finished.connect(self.on_simulation_finished)  # Connect the signal
+            
+            # Set the initial speed based on the speed selector
+            speed_text = self.speed_selector.currentText()
+            speed_multiplier = float(speed_text.strip('x'))
+            self.controller.set_speed(speed_multiplier)
+            
             self.controller.start()  # Start the controller's timer
 
             self.start_button.setEnabled(False)  # Disable Start button
@@ -171,6 +187,14 @@ class MainWindow(QWidget):
         self.load_maze_from_selected_file(self.file_selector.currentText())
         self.custom_text.setText("Step 0 --- Total cost : 0")
         self.start_button.setEnabled(True)  # Ensure Start button is enabled
+
+    def change_speed(self, text):
+        if self.controller:
+            try:
+                multiplier = float(text.strip('x'))
+                self.controller.set_speed(multiplier)
+            except ValueError:
+                print(f"Invalid speed multiplier selected: {text}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
