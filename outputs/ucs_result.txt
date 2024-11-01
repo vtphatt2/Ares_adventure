@@ -1,0 +1,6 @@
+UCS
+Steps: 37, Cost: 94, Node: 56650, Time (ms): 1209.9409103393555, Memory (MB): 0.00038909912109375
+dlUruLulldRllddrURRdrruulDlluRdllluRR
+UCS
+Steps: 37, Cost: 94, Node: 56650, Time (ms): 1160.0451469421387, Memory (MB): 0.00038909912109375
+dlUruLulldRllddrURRdrruulDlluRdllluRR

@@ -9,7 +9,13 @@ class Maze:
         with open(filepath, 'r') as f:
             weight_line = f.readline().strip()
             self.stone_weights = list(map(int, weight_line.split()))
-            self.grid = [list(line.rstrip('\n')) for line in f]
+            raw_grid = [line.rstrip('\n') for line in f]
+
+        # Determine the maximum line length
+        max_length = max(len(line) for line in raw_grid)
+
+        # Pad each line to ensure consistent length
+        self.grid = [list(line.ljust(max_length)) for line in raw_grid]
 
         weight_iter = iter(self.stone_weights)
         for i, row in enumerate(self.grid):
