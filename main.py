@@ -1,6 +1,10 @@
 import sys
 import os
-from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QComboBox, QPushButton, QLabel
+from PyQt6.QtWidgets import (
+    QApplication, QWidget, QHBoxLayout, QVBoxLayout, QComboBox, 
+    QPushButton, QLabel
+)
+from PyQt6.QtCore import Qt
 from model.maze import Maze
 from gui.view import MazeView
 from controller.controller import MazeController
@@ -59,6 +63,9 @@ class MainWindow(QWidget):
         self.current_maze = None
         self.current_view = None
 
+        # Initialize controller
+        self.controller = None  # Initialize controller as None
+
         # Load the default maze from the currently selected file
         self.load_maze_from_selected_file(self.file_selector.currentText())
 
@@ -114,7 +121,7 @@ class MainWindow(QWidget):
             current_dir = os.path.dirname(os.path.realpath(__file__))  
             inputs_dir = os.path.join(current_dir, 'inputs')  
             file_name = self.file_selector.currentText()  
-            file_path = os.path.join(inputs_dir, file_name)
+            file_path = os.path.join(inputs_dir, file_name)  
 
             outputs_dir = 'outputs'
             if not os.path.exists(outputs_dir):
@@ -142,11 +149,28 @@ class MainWindow(QWidget):
 
             result.save(output_path)
 
+            # Stop any existing controller before creating a new one
+            if self.controller:
+                self.controller.stop()
+
             self.controller = MazeController(self.current_maze, self.current_view, result, self.custom_text)
-            self.controller.run_sequence()
+            self.controller.finished.connect(self.on_simulation_finished)  # Connect the signal
+            self.controller.start()  # Start the controller's timer
+
+            self.start_button.setEnabled(False)  # Disable Start button
+
+    def on_simulation_finished(self):
+        self.start_button.setEnabled(True)  # Re-enable Start button
+        self.controller = None  # Clear the controller reference
 
     def reset_simulation(self):
+        # Stop the controller if it's running
+        if self.controller:
+            self.controller.stop()
+            self.controller = None  # Clear the controller reference
         self.load_maze_from_selected_file(self.file_selector.currentText())
+        self.custom_text.setText("Step 0 --- Total cost : 0")
+        self.start_button.setEnabled(True)  # Ensure Start button is enabled
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

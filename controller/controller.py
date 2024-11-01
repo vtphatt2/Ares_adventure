@@ -1,13 +1,19 @@
-from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import QTimer, QObject, pyqtSignal
 
-class MazeController:
+class MazeController(QObject):
+    finished = pyqtSignal()
+
     def __init__(self, maze, view, result, label):
+        super().__init__()  # Initialize QObject
         self.maze = maze
         self.view = view
         self.result = result
         self.label = label
         self.ares_position = maze.get_start_position()
         self.step_index = 0
+        self.timer = QTimer()
+        self.timer.setInterval(500)  # 500 ms interval
+        self.timer.timeout.connect(self.run_sequence)
 
     def move_ares(self, action):
         if not self.ares_position:
@@ -98,13 +104,22 @@ class MazeController:
             self.maze.grid[new_x][new_y] = '@'
 
     def run_sequence(self):
-        if self.step_index < len(self.result.sequence_of_actions):
-            action = self.result.sequence_of_actions[self.step_index]
-            print(f"Executing action: {action}")
-            self.move_ares(action)
+            if self.step_index < len(self.result.sequence_of_actions):
+                action = self.result.sequence_of_actions[self.step_index]
+                print(f"Executing action: {action}")
+                self.move_ares(action)
 
-            total_cost = self.result.get_cost_steps()[self.step_index]
-            self.label.setText(f"Step {self.step_index + 1} --- Total cost: {total_cost}")
+                total_cost = self.result.get_cost_steps()[self.step_index]
+                self.label.setText(f"Step {self.step_index + 1} --- Total cost: {total_cost}")
 
-            self.step_index += 1
-            QTimer.singleShot(500, self.run_sequence)
+                self.step_index += 1
+            else:
+                self.timer.stop()  # Stop the timer when done
+
+    def start(self):
+        self.timer.start()
+
+    def stop(self):
+        if self.timer.isActive():
+            self.timer.stop()
+            self.finished.emit()
