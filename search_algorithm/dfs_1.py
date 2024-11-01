@@ -98,7 +98,7 @@ class DFS:
         end_time = time.time()
 
         self.result.set_time((end_time - start_time) * 1000)
-        self.result.set_memory(memory_tracker.peak_memory_usage())  # Convert to MB
+        self.result.set_memory(memory_tracker.peak_memory_usage())
         self.result.set_node(nodes_generated)
         self.result.save("outputs/dfs_result.txt")
 
@@ -187,4 +187,3 @@ class DFS:
             cost_each_step.append(total_cost)
 
         return cost_each_step
-    

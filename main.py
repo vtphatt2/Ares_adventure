@@ -6,7 +6,7 @@ from gui.view import MazeView
 from controller.controller import MazeController
 import re
 from search_algorithm.bfs import BFS
-from search_algorithm.dfs import DFS
+from search_algorithm.dfs_3 import DFS
 from search_algorithm.ucs import UCS
 from search_algorithm.a_star import A_star
 
