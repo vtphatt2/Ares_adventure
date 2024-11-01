@@ -114,26 +114,33 @@ class MainWindow(QWidget):
             current_dir = os.path.dirname(os.path.realpath(__file__))  
             inputs_dir = os.path.join(current_dir, 'inputs')  
             file_name = self.file_selector.currentText()  
-            file_path = os.path.join(inputs_dir, file_name)  
+            file_path = os.path.join(inputs_dir, file_name)
+
+            outputs_dir = 'outputs'
+            if not os.path.exists(outputs_dir):
+                os.makedirs(outputs_dir)  
 
             print(f"Running {algorithm_name} on {file_path}")
 
-            if algorithm_name == "BFS":
-                bfs = BFS(file_path)
-                bfs.run()
-                result = bfs.get_result()
-            elif algorithm_name == "DFS":
-                dfs = DFS(file_path)
-                dfs.run()
-                result = dfs.get_result()
-            elif algorithm_name == "UCS":
-                ucs = UCS(file_path)
-                ucs.run()
-                result = ucs.get_result()
-            elif algorithm_name == "A*":
-                a_star = A_star(file_path)
-                a_star.run()
-                result = a_star.get_result()
+            algorithms = {
+                "BFS": BFS,
+                "DFS": DFS,
+                "UCS": UCS,
+                "A*": A_star
+            }
+
+            # Run the selected algorithm
+            if algorithm_name in algorithms:
+                algorithm_class = algorithms[algorithm_name]
+                algorithm_instance = algorithm_class(file_path)
+                algorithm_instance.run()
+                result = algorithm_instance.get_result()
+
+            input_filename = os.path.basename(file_path)
+            output_filename = input_filename.replace('input', 'output')
+            output_path = os.path.join(outputs_dir, output_filename)
+
+            result.save(output_path)
 
             self.controller = MazeController(self.current_maze, self.current_view, result, self.custom_text)
             self.controller.run_sequence()
