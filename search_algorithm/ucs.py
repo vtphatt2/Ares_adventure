@@ -1,6 +1,6 @@
 import heapq
 import time
-import sys
+from model.memory import MemoryTracker
 from model.result import Result
 
 class MazeState:
@@ -108,7 +108,8 @@ class UCS:
 
     def run(self):
         start_time = time.time()
-        start_memory = sys.getsizeof(globals()) + sys.getsizeof(locals())
+
+        memory_tracker = MemoryTracker()
 
         stone_weights, maze = self.read_input(self.input_file)
         player_pos, stone_positions = self.find_player_and_stones(maze)
@@ -129,7 +130,9 @@ class UCS:
             print("No solution found.")
 
         self.result.set_time((end_time - start_time) * 1000)  # Convert to milliseconds
-        self.result.set_memory((end_memory - start_memory) / (1024 * 1024))  # Convert to MB
+        self.result.set_memory(memory_tracker.peak_memory_usage())  # Convert to MB
+
+        memory_tracker.stop_tracking()
 
     def get_result(self):
         return self.result
