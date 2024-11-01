@@ -100,7 +100,7 @@ class MazeController:
     def run_sequence(self):
         if self.step_index < len(self.result.sequence_of_actions):
             action = self.result.sequence_of_actions[self.step_index]
-            # print(f"Executing action: {action}")
+            print(f"Executing action: {action}")
             self.move_ares(action)
 
             total_cost = self.result.get_cost_steps()[self.step_index]
