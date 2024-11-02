@@ -33,7 +33,7 @@ class DFS:
                 if char == '@':  # Ares' position
                     ares_position = (j, i - 1)
                     row.append(' ')  # Ares is movable -> free space
-                elif char == '$':  # Stone position
+                elif char == '$' or char == '*':  # Stone position
                     stone_positions.append((j, i - 1))
                     row.append(' ')  # Stones are considered as movable objects -> free space
                 elif char == '.':  # Switch position

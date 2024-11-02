@@ -32,7 +32,7 @@ class DFS:
                 if char == '@':  # Ares' position
                     ares_position = (j, i - 1)
                     row.append(' ')  # Ares is movable -> free space
-                elif char == '$':  # Stone position
+                elif char == '$' or char == '*':  # Stone position
                     stone_positions.append((j, i - 1))
                     row.append(' ')  # Stones are considered as movable objects -> free space
                 elif char == '.':  # Switch position
@@ -145,9 +145,11 @@ class DFS:
 
     def is_deadlock(self, stone_positions):
         for stone in stone_positions:
-            if stone not in self.start_state['switches']:
+            # if stone not in self.start_state['switches']:
                 x, y = stone
                 maze = self.start_state['maze']
+                if (maze[y][x] == '.'):  # Stone is in a switch position
+                    return False
                 # Check for corners (simplest deadlock detection)
                 if ((maze[y][x - 1] == '#') and (maze[y - 1][x] == '#')):
                     return True

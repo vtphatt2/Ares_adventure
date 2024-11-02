@@ -34,7 +34,7 @@ class BFS:
                 if char == '@':  # Ares' position
                     ares_position = (j, i - 1)
                     row.append(' ')  # Ares is movable -> free space
-                elif char == '$':  # Stone position
+                elif char == '$' or char == '*':  # Stone position
                     stone_positions.append((j, i - 1))
                     row.append(' ')  # Stones are considered as movable objects -> free space
                 elif char == '.':  # Switch position
@@ -130,6 +130,10 @@ class BFS:
                 if self.is_valid_move(new_stone_position, stone_positions):
                     new_stone_positions = list(stone_positions)
                     new_stone_positions[stone_index] = new_stone_position
+
+                    if self.is_deadlock(new_stone_positions):
+                        continue
+
                     new_state = (new_ares_position, tuple(new_stone_positions))
                     neighbors.append((new_state, action.upper()))
 
@@ -142,6 +146,24 @@ class BFS:
         if position in stone_positions: # Prevent pushing a stone into another stone
             return False
         return True
+    
+    def is_deadlock(self, stone_positions):
+        for stone in stone_positions:
+            # if stone not in self.start_state['switches']:
+                x, y = stone
+                maze = self.start_state['maze']
+                if (maze[y][x] == '.'):  # Stone is in a switch position
+                    return False
+                # Check for corners (simplest deadlock detection)
+                if ((maze[y][x - 1] == '#') and (maze[y - 1][x] == '#')):
+                    return True
+                if ((maze[y][x + 1] == '#') and (maze[y - 1][x] == '#')):
+                    return True
+                if ((maze[y][x - 1] == '#') and (maze[y + 1][x] == '#')):
+                    return True
+                if ((maze[y][x + 1] == '#') and (maze[y + 1][x] == '#')):
+                    return True
+        return False
 
     def reconstruct_path(self, state, parent_map):
         path = []
