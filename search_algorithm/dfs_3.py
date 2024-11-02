@@ -123,13 +123,12 @@ class DFS:
                     new_stone_positions = list(stone_positions)
                     new_stone_positions[stone_index] = new_stone_position
 
+                    if self.is_deadlock(new_stone_positions):
+                        continue
+
                     # Sort the stone positions for canonical state representation
                     sorted_new_stone_positions = tuple(sorted(new_stone_positions))
                     new_state = (new_ares_position, sorted_new_stone_positions)
-
-                    # Deadlock detection for the new state
-                    if self.is_deadlock(sorted_new_stone_positions):
-                        continue  # Skip deadlocked states
 
                     neighbors.append((new_state, action.upper()))
 
@@ -202,3 +201,4 @@ class DFS:
             cost_each_step.append(total_cost)
 
         return cost_each_step
+    

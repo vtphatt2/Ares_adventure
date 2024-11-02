@@ -13,3 +13,12 @@ luuRRUdllddrrUdlluururUdldlddrruUUdddrruLdllluurrurDlllddrrUUruLdddrUUllUU
 BFS
 Steps: 56, Cost: 267, Node: 105132, Time (ms): 2650.420665740967, Memory (MB): 29.0679931640625
 luuRRUUldldddrrUUddrruLdllluurrUrDlllddrrUUruLdddrUUllUU
+A*
+Steps: 74, Cost: 285, Node: 19045, Time (ms): 663.3894443511963, Memory (MB): 4.927522659301758
+luuRRUdllddrrUdlluururUdldlddrruUUdddrruLdllluurrurDlllddrrUUruLdddrUUllUU
+BFS
+Steps: 56, Cost: 246, Node: 27459, Time (ms): 420.7041263580322, Memory (MB): 8.279855728149414
+luuRRUUldldddrrUUddrruLdllluurrUrDlllddrrUUruLdddrUUllUU
+BFS
+Steps: 56, Cost: 246, Node: 27459, Time (ms): 419.3916320800781, Memory (MB): 8.279718399047852
+luuRRUUldldddrrUUddrruLdllluurrUrDlllddrrUUruLdddrUUllUU

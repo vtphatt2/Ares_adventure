@@ -52,7 +52,7 @@ class BFS:
 
         return {
             'ares': ares_position,
-            'stones': stone_positions,
+            'stones': tuple(sorted(stone_positions)),
             'stone_weights': stone_weights,
             'switches': switch_positions,
             'maze': tuple(maze),
@@ -134,7 +134,10 @@ class BFS:
                     if self.is_deadlock(new_stone_positions):
                         continue
 
-                    new_state = (new_ares_position, tuple(new_stone_positions))
+                    # Sort the stone positions for canonical state representation
+                    sorted_new_stone_positions = tuple(sorted(new_stone_positions))
+                    new_state = (new_ares_position, sorted_new_stone_positions)
+                    
                     neighbors.append((new_state, action.upper()))
 
         return neighbors

@@ -49,3 +49,6 @@ rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDrrrrRR
 DFS
 Steps: 158, Cost: 200, Node: 491, Time (ms): 26.038169860839844, Memory (MB): 0.14891910552978516
 rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDrrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUdlllullllllllluulllDDuurrrddrrrrrrrrrdrrruUUUUU
+BFS
+Steps: 120, Cost: 162, Node: 1681551, Time (ms): 31883.005142211914, Memory (MB): 440.9231758117676
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
