@@ -144,20 +144,28 @@ class DFS:
 
     def is_deadlock(self, stone_positions):
         for stone in stone_positions:
-            # if stone not in self.start_state['switches']:
-                x, y = stone
-                maze = self.start_state['maze']
-                if (maze[y][x] == '.'):  # Stone is in a switch position
-                    return False
-                # Check for corners (simplest deadlock detection)
-                if ((maze[y][x - 1] == '#') and (maze[y - 1][x] == '#')):
-                    return True
-                if ((maze[y][x + 1] == '#') and (maze[y - 1][x] == '#')):
-                    return True
-                if ((maze[y][x - 1] == '#') and (maze[y + 1][x] == '#')):
-                    return True
-                if ((maze[y][x + 1] == '#') and (maze[y + 1][x] == '#')):
-                    return True
+            x, y = stone
+            maze = self.start_state['maze']
+            if (maze[y][x] == '.'):  # Stone is in a switch position
+                return False
+            
+            if self.is_corner_deadlock(x, y, maze):
+                return True
+                
+        return False
+    
+    def is_corner_deadlock(self, x, y, maze):
+        """Check if stone is stuck in a corner formed by walls."""
+        corners = [
+            ((x-1, y), (x, y-1)),  # Top-left
+            ((x+1, y), (x, y-1)),  # Top-right
+            ((x-1, y), (x, y+1)),  # Bottom-left
+            ((x+1, y), (x, y+1))   # Bottom-right
+        ]
+        
+        for (x1, y1), (x2, y2) in corners:
+            return (maze[y1][x1] == '#' and maze[y2][x2] == '#')
+            
         return False
 
     def reconstruct_path(self, state, parent_map):

@@ -28,3 +28,18 @@ dddrddlUUUluRRuurrDurrrdLLLL
 A*
 Steps: 28, Cost: 516, Node: 85, Time (ms): 23.420333862304688, Memory (MB): 0.022006988525390625
 rrurDrurrdLLLLdlddddlUUUluRR
+UCS
+Steps: 32, Cost: 438, Node: 36798, Time (ms): 4986.943483352661, Memory (MB): 31.47385311126709
+rurrrdLurrrdLLulDLdlddddlUUUluRR
+BFS
+Steps: 28, Cost: 254, Node: 8084, Time (ms): 129.0276050567627, Memory (MB): 2.3559913635253906
+dddrddlUUUluRRuurrDurrrdLLLL
+BFS
+Steps: 28, Cost: 254, Node: 8084, Time (ms): 136.98744773864746, Memory (MB): 2.373790740966797
+dddrddlUUUluRRuurrDurrrdLLLL
+BFS
+Steps: 28, Cost: 254, Node: 8084, Time (ms): 129.75716590881348, Memory (MB): 2.308818817138672
+dddrddlUUUluRRuurrDurrrdLLLL
+BFS
+Steps: 28, Cost: 254, Node: 8084, Time (ms): 127.38966941833496, Memory (MB): 2.369525909423828
+dddrddlUUUluRRuurrDurrrdLLLL

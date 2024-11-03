@@ -157,16 +157,61 @@ class BFS:
                 maze = self.start_state['maze']
                 if (maze[y][x] == '.'):  # Stone is in a switch position
                     return False
-                # Check for corners (simplest deadlock detection)
-                if ((maze[y][x - 1] == '#') and (maze[y - 1][x] == '#')):
+                
+                if self.is_corner_deadlock(x, y, maze):
                     return True
-                if ((maze[y][x + 1] == '#') and (maze[y - 1][x] == '#')):
+                
+                if self.is_wall_deadlock(x, y, maze):
                     return True
-                if ((maze[y][x - 1] == '#') and (maze[y + 1][x] == '#')):
-                    return True
-                if ((maze[y][x + 1] == '#') and (maze[y + 1][x] == '#')):
-                    return True
+                
         return False
+    
+    def is_corner_deadlock(self, x, y, maze):
+        """Check if stone is stuck in a corner formed by walls."""
+        corners = [
+            ((x-1, y), (x, y-1)),  # Top-left
+            ((x+1, y), (x, y-1)),  # Top-right
+            ((x-1, y), (x, y+1)),  # Bottom-left
+            ((x+1, y), (x, y+1))   # Bottom-right
+        ]
+        
+        for (x1, y1), (x2, y2) in corners:
+            if maze[y1][x1] == '#' and maze[y2][x2] == '#':
+                return True
+        return False
+
+    def is_wall_deadlock(self, x, y, maze):
+        """Check if stone is stuck against a wall with no path to any switch."""
+        height = len(maze)
+        width = len(maze[0])
+
+        # Horizontal wall check (left-most or right-most wall)
+        if x == 0 or x == width - 1:
+            has_goal_in_row = any(maze[y][i] == '.' for i in range(width))
+            return not has_goal_in_row
+
+        # Vertical wall check (top-most or bottom-most wall)
+        if y == 0 or y == height - 1:
+            has_goal_in_column = any(maze[i][x] == '.' for i in range(height))
+            return not has_goal_in_column
+
+        return False
+        # # Check for wall deadlock along horizontal or vertical walls
+        # rows, cols = len(maze), len(maze[0])
+        
+        # # Check if stone is along a vertical wall
+        # if (maze[y][x - 1] == '#') or (maze[y][x + 1] == '#'):
+        #     # Stone is next to a vertical wall, check if it has a path to a switch in the column
+        #     column_has_switch = any((x, j) in self.start_state['switches'] for j in range(rows) if maze[j][x] != '#')
+        #     return not column_has_switch # No accessible switch in the column, deadlock along vertical wall
+        
+        # # Check if stone is along a horizontal wall
+        # if (maze[y - 1][x] == '#') or (maze[y + 1][x] == '#'):
+        #     # Stone is next to a horizontal wall, check if it has a path to a switch in the row
+        #     row_has_switch = any((i, y) in self.start_state['switches'] for i in range(cols) if maze[y][i] != '#')
+        #     return not row_has_switch # No accessible switch in the row, deadlock along horizontal wall 
+        
+        # return False
 
     def reconstruct_path(self, state, parent_map):
         path = []
