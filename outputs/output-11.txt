@@ -61,3 +61,9 @@ rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurr
 A*
 Steps: 120, Cost: 162, Node: 1048946, Time (ms): 59318.76349449158, Memory (MB): 311.00951385498047
 rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
+BFS
+Steps: 120, Cost: 162, Node: 1681551, Time (ms): 35278.44786643982, Memory (MB): 440.9232292175293
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
+A*
+Steps: 120, Cost: 162, Node: 1048946, Time (ms): 68663.9358997345, Memory (MB): 311.0136260986328
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
