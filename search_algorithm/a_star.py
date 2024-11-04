@@ -26,7 +26,10 @@ def get_start_state(input_file = ""):
             if char == '@':  # Ares' position
                 ares_position = (j, i - 1)
                 row.append(' ')  # Ares is movable -> free space
-            elif char == '$' or char == '*':  # Stone position
+            elif char == '*': 
+                stone_positions.append((j, i - 1))
+                switch_positions.append((j, i - 1))
+            elif char == '$':  # Stone position
                 stone_positions.append((j, i - 1))
                 row.append(' ')  # Stones are considered as movable objects -> free space
             elif char == '.':  # Switch position
@@ -181,10 +184,6 @@ class A_star:
                 if self.is_valid_move(new_stone_position, stone_positions):
                     new_stone_positions = list(stone_positions)
                     new_stone_positions[stone_index] = new_stone_position
-
-                    if (self.is_deadlock(new_stone_positions)):
-                        continue
-
                     new_state = (new_ares_position, tuple(new_stone_positions))
                     neighbors.append((new_state, action.upper()))
 
