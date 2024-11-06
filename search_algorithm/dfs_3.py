@@ -146,13 +146,18 @@ class DFS:
         return True
 
     def is_deadlock(self, stone_positions):
+        stones_set = set(stone_positions) # convert to set for faster lookup, average time complexity O(1)
         for stone in stone_positions:
             x, y = stone
             maze = self.start_state['maze']
+
             if (maze[y][x] == '.'):  # Stone is in a switch position
                 return False
             
             if self.is_corner_deadlock(x, y, maze):
+                return True
+            
+            if self.is_wall_deadlock(x, y, maze, stones_set):
                 return True
                 
         return False
@@ -167,8 +172,26 @@ class DFS:
         ]
         
         for (x1, y1), (x2, y2) in corners:
-            return (maze[y1][x1] == '#' and maze[y2][x2] == '#')
-            
+            if maze[y1][x1] == '#' and maze[y2][x2] == '#':
+                return True
+        return False
+
+    def is_wall_deadlock(self, x, y, maze, stones_set):
+        """Check if stone is stuck against a wall with no path to any switch."""
+        if maze[y][x-1] == '#' or maze[y][x+1] == '#':  # Horizontal wall
+            # Check if stone is blocked vertically by other stones 
+            above_blocked = (x, y-1) in stones_set and (maze[y-1][x-1] == '#' or maze[y-1][x+1] == '#')
+            below_blocked = (x, y+1) in stones_set and (maze[y+1][x-1] == '#' or maze[y+1][x+1] == '#')
+            if above_blocked or below_blocked:
+                return True
+
+        if maze[y-1][x] == '#' or maze[y+1][x] == '#':  # Vertical wall
+            # Check if stone is blocked horizontally by other stones
+            left_blocked = (x-1, y) in stones_set and (maze[y-1][x-1] == '#' or maze[y+1][x-1] == '#')
+            right_blocked = (x+1, y) in stones_set and (maze[y-1][x+1] == '#' or maze[y+1][x+1] == '#')
+            if left_blocked or right_blocked:
+                return True
+
         return False
 
     def reconstruct_path(self, state, parent_map):
