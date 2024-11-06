@@ -9,35 +9,41 @@ class BFS:
         self.result = Result(search_algo_name = "BFS")
         self.start_state = self.get_start_state(input_file)
     
-    def get_start_state(self, input_file = ""):
-        if input_file == "":
+    def get_start_state(self, input_file=""):
+        if not input_file:
             raise ValueError("No input file provided.")
-            return -1
 
         with open(input_file, "r") as f:
             lines = f.readlines()
+        
+        if not lines:
+            raise ValueError("Input file is empty.")
 
         maze = []           # 2D list representing the maze
         ares_position = None
         stone_positions = []
         stone_weights = []
         switch_positions = []
-        
+        max_length_row = 0
+
         # Parse the file line by line
         for i, line in enumerate(lines):
             if i == 0:  # First line contains stone weights
-                # map() function apply the int() function to every element in the list of strings produced by split()
                 stone_weights = list(map(int, line.strip().split()))
                 continue
+            
+            line = line.rstrip('\n')
             row = []  # To store the current row of the maze
-            for j, char in enumerate(line.strip()):
+            max_length_row = max(max_length_row, len(line))
+            
+            for j, char in enumerate(line):
                 if char == '@':  # Ares' position
                     ares_position = (j, i - 1)
                     row.append(' ')  # Ares is movable -> free space
                 elif char == '*': 
                     stone_positions.append((j, i - 1))
                     switch_positions.append((j, i - 1))
-                elif char == '$' or char == '*':  # Stone position
+                elif char == '$':  # Stone position
                     stone_positions.append((j, i - 1))
                     row.append(' ')  # Stones are considered as movable objects -> free space
                 elif char == '.':  # Switch position
@@ -48,14 +54,19 @@ class BFS:
                 else:
                     row.append(' ') 
             maze.append(row)  # Add the row to the maze
-        
+
         # Ensure the number of weights matches the number of stones
         if len(stone_weights) != len(stone_positions):
             raise ValueError("Number of stone weights does not match the number of stones.")
+        
+        # Pad rows to ensure consistent length
+        for row in maze:
+            if len(row) < max_length_row:
+                row.extend([' '] * (max_length_row - len(row)))
 
         return {
             'ares': ares_position,
-            'stones': tuple(sorted(stone_positions)),
+            'stones': tuple(sorted(stone_positions)),  # Sort the stone positions
             'stone_weights': stone_weights,
             'switches': switch_positions,
             'maze': tuple(maze),

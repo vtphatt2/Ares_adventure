@@ -1,0 +1,9 @@
+A*
+Steps: 92, Cost: 288, Node: 2241883, Time (ms): 153915.36164283752, Memory (MB): 688.6204719543457
+rrddlUruLLLUluurDDlllddrrURRRdrUUdllllddrUluRRRlluulDDuruurrdDrDLLLdLUUllddRluurrruulDurrrrD
+A*
+Steps: 92, Cost: 288, Node: 2241883, Time (ms): 203925.48608779907, Memory (MB): 688.5471954345703
+rrddlUruLLLUluurDDlllddrrURRRdrUUdllllddrUluRRRlluulDDuruurrdDrDLLLdLUUllddRluurrruulDurrrrD
+A*
+Steps: 92, Cost: 288, Node: 4449350, Time (ms): 490840.2397632599, Memory (MB): 1400.1207599639893
+rrddlUruLLLUluurDDlllddrrURRRdrUUdllllddrUluRRRlluulDDuruurrdDrDLLLdLUUllddRluurrruulDurrrrD

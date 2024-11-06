@@ -1,0 +1,3 @@
+A*
+Steps: 120, Cost: 162, Node: 1048946, Time (ms): 80730.98039627075, Memory (MB): 311.01348876953125
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
