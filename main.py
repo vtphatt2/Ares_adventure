@@ -9,6 +9,7 @@ from model.maze import Maze
 from gui.view import MazeView
 from controller.controller import MazeController
 import re
+import glob
 from search_algorithm.bfs import BFS
 from search_algorithm.dfs_3 import DFS
 from search_algorithm.ucs import UCS
@@ -16,6 +17,8 @@ from search_algorithm.a_star import A_star
 
 class MainWindow(QWidget):
     def __init__(self):
+        self.delete_output_files()
+
         super().__init__()
         self.setWindowTitle("Ares's Adventure")  # Set the window title
 
@@ -195,6 +198,17 @@ class MainWindow(QWidget):
                 self.controller.set_speed(multiplier)
             except ValueError:
                 print(f"Invalid speed multiplier selected: {text}")
+
+    def delete_output_files(self):
+        outputs_dir = 'outputs'
+        pattern = os.path.join(outputs_dir, 'output-*.txt')
+        files_to_delete = glob.glob(pattern)
+        for file_path in files_to_delete:
+            try:
+                os.remove(file_path)
+                print(f"Deleted: {file_path}")
+            except OSError as e:
+                print(f"Error deleting {file_path}: {e}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
