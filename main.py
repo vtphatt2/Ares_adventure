@@ -160,7 +160,7 @@ class MainWindow(QWidget):
             output_filename = input_filename.replace('input', 'output')
             output_path = os.path.join(outputs_dir, output_filename)
 
-            result.save(output_path)
+            result.save(output_path, duplicate=False)
 
             # Stop any existing controller before creating a new one
             if self.controller:

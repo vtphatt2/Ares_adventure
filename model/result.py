@@ -11,40 +11,60 @@ class Result:
         self.sequence_of_actions = sequence_of_actions  # for example : uLulDrrRRRRRRurD
         self.cost_steps = []                          # for example : [0, 3, 10, 15, 30, 32]
 
-    def save(self, filepath="", mode="a"):
+    def save(self, filepath="", duplicate=False):
         """
         Save the result to a file in the following format:
 
         BFS
         Steps: 16, Cost: 695, Node: 4321, Time (ms): 58.12, Memory (MB): 12.56
         uLulDrrRRRRRRurD
+
+        Parameters:
+        - filepath (str): The path to the output file.
+        - duplicate (bool): If False, ensures that each algorithm appears only once by replacing existing entries.
+                            If True, allows multiple entries for the same algorithm.
         """
         # Ensure the directory exists
         directory = os.path.dirname(filepath)
         if directory and not os.path.exists(directory):
             os.makedirs(directory)
 
-        # If the file exists, read its content and remove existing entries for the current algorithm
-        if os.path.exists(filepath):
+        # Initialize a list to hold all entries except the current algorithm's (if duplicate=False)
+        filtered_lines = []
+
+        # If the file exists and duplicate is False, filter out existing entries for the current algorithm
+        if os.path.exists(filepath) and not duplicate:
             with open(filepath, 'r') as f:
                 lines = f.readlines()
 
             # Process the file in chunks of 3 lines (name, details, sequence)
             entries = [lines[i:i+3] for i in range(0, len(lines), 3)]
             
+            # Debugging: Print number of entries before filtering
+            print(f"Total entries before filtering: {len(entries)}")
+
             # Filter out entries where the first line matches the current algorithm name
             filtered_entries = [entry for entry in entries if entry[0].strip() != self.search_algo_name]
+            
+            # Debugging: Print number of entries after filtering
+            print(f"Total entries after filtering: {len(filtered_entries)}")
 
-            # Write back the filtered entries to the file
+            # Flatten the list of filtered entries back into a single list of lines
+            filtered_lines = [line for entry in filtered_entries for line in entry]
+
+            # Write the filtered content back to the file
             with open(filepath, 'w') as f:
-                for entry in filtered_entries:
-                    f.writelines(entry)
+                f.writelines(filtered_lines)
 
         # Append the new result
         with open(filepath, 'a') as f:
             f.write(self.search_algo_name + "\n")
             f.write(f"Steps: {self.steps}, Cost: {self.cost}, Node: {self.node}, Time (ms): {self.time}, Memory (MB): {self.memory}\n")
             f.write(self.sequence_of_actions + "\n")
+
+        # Debugging: Confirm save operation
+        action = "Appended" if duplicate else "Saved"
+        print(f"{action} entry for algorithm: {self.search_algo_name}")
         
 
     # all getters and setters
