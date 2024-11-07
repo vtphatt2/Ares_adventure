@@ -30,7 +30,7 @@ class Maze:
     def get_start_position(self):
         for i, row in enumerate(self.grid):
             for j, cell in enumerate(row):
-                if cell == '@':
+                if cell == '@' or cell == '+':
                     return i, j
         return None
 

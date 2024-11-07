@@ -19,3 +19,21 @@ llldRRRulluluRRurDRurD
 A*
 Steps: 22, Cost: 39, Node: 216, Time (ms): 10.895252227783203, Memory (MB): 0.058162689208984375
 llldRRRlluuluRRurDRurD
+BFS
+Steps: 24, Cost: 41, Node: 49904, Time (ms): 393.0649757385254, Memory (MB): 14.957207679748535
+ulllldRRRuullluRRurDRurD
+BFS
+Steps: 24, Cost: 41, Node: 49904, Time (ms): 389.44315910339355, Memory (MB): 14.957180976867676
+ulllldRRRuullluRRurDRurD
+BFS
+Steps: 22, Cost: 39, Node: 46015, Time (ms): 354.38013076782227, Memory (MB): 14.13012981414795
+llldRRRuullluRRurDRurD
+BFS
+Steps: 22, Cost: 39, Node: 46015, Time (ms): 368.12901496887207, Memory (MB): 14.37653636932373
+llldRRRuullluRRurDRurD
+BFS
+Steps: 24, Cost: 41, Node: 49904, Time (ms): 400.4642963409424, Memory (MB): 14.956646919250488
+ulllldRRRuullluRRurDRurD
+BFS
+Steps: 24, Cost: 41, Node: 49904, Time (ms): 390.5501365661621, Memory (MB): 14.957180976867676
+ulllldRRRuullluRRurDRurD

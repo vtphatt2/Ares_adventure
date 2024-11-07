@@ -95,7 +95,7 @@ class MazeController(QObject):
             self.maze.grid[stone_x][stone_y] = ' '
 
     def update_ares_position(self, old_x, old_y, new_x, new_y):
-        ares_on_switch = self.maze.grid[old_x][old_y] == '+'
+        ares_on_switch = (self.maze.grid[old_x][old_y] == '+')
 
         if ares_on_switch:
             self.maze.grid[old_x][old_y] = '.'
@@ -111,6 +111,8 @@ class MazeController(QObject):
             if self.step_index < len(self.result.sequence_of_actions):
                 action = self.result.sequence_of_actions[self.step_index]
                 print(f"Executing action: {action}")
+                for row in self.maze.grid:
+                    print(row)
                 self.move_ares(action)
 
                 total_cost = self.result.get_cost_steps()[self.step_index]
