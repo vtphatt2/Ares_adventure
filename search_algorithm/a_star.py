@@ -37,23 +37,28 @@ class A_star:
             max_length_row = max(max_length_row, len(line))
             
             for j, char in enumerate(line):
-                if char == '@':  # Ares' position
+                if char == '@':     # Ares' position
                     ares_position = (j, i - 1)
-                    row.append(' ')  # Ares is movable -> free space
-                elif char == '*': 
+                    row.append(' ') # Ares is movable -> free space
+                elif char == '*':   # Stone on a switch position
                     stone_positions.append((j, i - 1))
-                    switch_positions.append((j, i - 1))
-                elif char == '$':  # Stone position
-                    stone_positions.append((j, i - 1))
-                    row.append(' ')  # Stones are considered as movable objects -> free space
-                elif char == '.':  # Switch position
                     switch_positions.append((j, i - 1))
                     row.append('.') 
-                elif char == '#':  # Wall
+                elif char == '+':   # Ares on a switch position
+                    ares_position = (j, i - 1)
+                    switch_positions.append((j, i - 1))
+                    row.append('.')
+                elif char == '$':   # Stone position
+                    stone_positions.append((j, i - 1))
+                    row.append(' ') # Stones are considered as movable objects -> free space
+                elif char == '.':   # Switch position
+                    switch_positions.append((j, i - 1))
+                    row.append('.') 
+                elif char == '#':   # Wall
                     row.append('#') 
                 else:
                     row.append(' ') 
-            maze.append(row)  # Add the row to the maze
+            maze.append(row)        # Add the row to the maze
 
         # Ensure the number of weights matches the number of stones
         if len(stone_weights) != len(stone_positions):
@@ -216,19 +221,18 @@ class A_star:
     
     def is_deadlock(self, stone_positions):
         stones_set = set(stone_positions) # convert to set for faster lookup, average time complexity O(1)
+        maze = self.start_state['maze']
         for stone in stone_positions:
-            # if stone not in self.start_state['switches']:
-                x, y = stone
-                maze = self.start_state['maze']
+            x, y = stone
 
-                if (maze[y][x] == '.'):  # Stone is in a switch position
-                    return False
-                
-                if self.is_corner_deadlock(x, y, maze):
-                    return True
-                
-                if self.is_wall_deadlock(x, y, maze, stones_set):
-                    return True
+            if (maze[y][x] == '.'):  # Stone is in a switch position
+                return False
+            
+            if self.is_corner_deadlock(x, y, maze):
+                return True
+            
+            if self.is_wall_deadlock(x, y, maze, stones_set):
+                return True
                 
         return False
     

@@ -37,23 +37,28 @@ class BFS:
             max_length_row = max(max_length_row, len(line))
             
             for j, char in enumerate(line):
-                if char == '@':  # Ares' position
+                if char == '@':     # Ares' position
                     ares_position = (j, i - 1)
-                    row.append(' ')  # Ares is movable -> free space
-                elif char == '*': 
+                    row.append(' ') # Ares is movable -> free space
+                elif char == '*':   # Stone on a switch position
                     stone_positions.append((j, i - 1))
-                    switch_positions.append((j, i - 1))
-                elif char == '$':  # Stone position
-                    stone_positions.append((j, i - 1))
-                    row.append(' ')  # Stones are considered as movable objects -> free space
-                elif char == '.':  # Switch position
                     switch_positions.append((j, i - 1))
                     row.append('.') 
-                elif char == '#':  # Wall
+                elif char == '+':   # Ares on a switch position
+                    ares_position = (j, i - 1)
+                    switch_positions.append((j, i - 1))
+                    row.append('.')
+                elif char == '$':   # Stone position
+                    stone_positions.append((j, i - 1))
+                    row.append(' ') # Stones are considered as movable objects -> free space
+                elif char == '.':   # Switch position
+                    switch_positions.append((j, i - 1))
+                    row.append('.') 
+                elif char == '#':   # Wall
                     row.append('#') 
                 else:
                     row.append(' ') 
-            maze.append(row)  # Add the row to the maze
+            maze.append(row)        # Add the row to the maze
 
         # Ensure the number of weights matches the number of stones
         if len(stone_weights) != len(stone_positions):
@@ -158,27 +163,30 @@ class BFS:
     
     def is_valid_move(self, position, stone_positions):
         x, y = position
+
         if self.start_state['maze'][y][x] == '#': # Prevent moving into wall
             return False
+        
         if position in stone_positions: # Prevent pushing a stone into another stone
             return False
+        
         return True
     
     def is_deadlock(self, stone_positions):
         stones_set = set(stone_positions) # convert to set for faster lookup, average time complexity O(1)
+        maze = self.start_state['maze']
+        
         for stone in stone_positions:
-            # if stone not in self.start_state['switches']:
-                x, y = stone
-                maze = self.start_state['maze']
+            x, y = stone
 
-                if (maze[y][x] == '.'):  # Stone is in a switch position
-                    return False
-                
-                if self.is_corner_deadlock(x, y, maze):
-                    return True
-                
-                if self.is_wall_deadlock(x, y, maze, stones_set):
-                    return True
+            if (maze[y][x] == '.'):  # Stone is in a switch position
+                return False
+            
+            if self.is_corner_deadlock(x, y, maze):
+                return True
+            
+            if self.is_wall_deadlock(x, y, maze, stones_set):
+                return True
                 
         return False
     
@@ -213,23 +221,6 @@ class BFS:
                 return True
 
         return False
-    
-        # # Check for wall deadlock along horizontal or vertical walls
-        # rows, cols = len(maze), len(maze[0])
-        
-        # # Check if stone is along a vertical wall
-        # if (maze[y][x - 1] == '#') or (maze[y][x + 1] == '#'):
-        #     # Stone is next to a vertical wall, check if it has a path to a switch in the column
-        #     column_has_switch = any((x, j) in self.start_state['switches'] for j in range(rows) if maze[j][x] != '#')
-        #     return not column_has_switch # No accessible switch in the column, deadlock along vertical wall
-        
-        # # Check if stone is along a horizontal wall
-        # if (maze[y - 1][x] == '#') or (maze[y + 1][x] == '#'):
-        #     # Stone is next to a horizontal wall, check if it has a path to a switch in the row
-        #     row_has_switch = any((i, y) in self.start_state['switches'] for i in range(cols) if maze[y][i] != '#')
-        #     return not row_has_switch # No accessible switch in the row, deadlock along horizontal wall 
-        
-        # return False
 
     def reconstruct_path(self, state, parent_map):
         path = []

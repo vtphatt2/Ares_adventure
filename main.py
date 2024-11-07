@@ -17,7 +17,7 @@ from search_algorithm.a_star import A_star
 
 class MainWindow(QWidget):
     def __init__(self):
-        self.delete_output_files()
+        # self.delete_output_files()
 
         super().__init__()
         self.setWindowTitle("Ares's Adventure")  # Set the window title
@@ -160,7 +160,7 @@ class MainWindow(QWidget):
             output_filename = input_filename.replace('input', 'output')
             output_path = os.path.join(outputs_dir, output_filename)
 
-            result.save(output_path, duplicate=False)
+            result.save(output_path, duplicate=True)
 
             # Stop any existing controller before creating a new one
             if self.controller:

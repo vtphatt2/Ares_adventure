@@ -37,23 +37,28 @@ class DFS:
             max_length_row = max(max_length_row, len(line))
             
             for j, char in enumerate(line):
-                if char == '@':  # Ares' position
+                if char == '@':     # Ares' position
                     ares_position = (j, i - 1)
-                    row.append(' ')  # Ares is movable -> free space
-                elif char == '*': 
+                    row.append(' ') # Ares is movable -> free space
+                elif char == '*':   # Stone on a switch position
                     stone_positions.append((j, i - 1))
-                    switch_positions.append((j, i - 1))
-                elif char == '$':  # Stone position
-                    stone_positions.append((j, i - 1))
-                    row.append(' ')  # Stones are considered as movable objects -> free space
-                elif char == '.':  # Switch position
                     switch_positions.append((j, i - 1))
                     row.append('.') 
-                elif char == '#':  # Wall
+                elif char == '+':   # Ares on a switch position
+                    ares_position = (j, i - 1)
+                    switch_positions.append((j, i - 1))
+                    row.append('.')
+                elif char == '$':   # Stone position
+                    stone_positions.append((j, i - 1))
+                    row.append(' ') # Stones are considered as movable objects -> free space
+                elif char == '.':   # Switch position
+                    switch_positions.append((j, i - 1))
+                    row.append('.') 
+                elif char == '#':   # Wall
                     row.append('#') 
                 else:
                     row.append(' ') 
-            maze.append(row)  # Add the row to the maze
+            maze.append(row)        # Add the row to the maze
 
         # Ensure the number of weights matches the number of stones
         if len(stone_weights) != len(stone_positions):
