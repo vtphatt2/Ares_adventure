@@ -71,7 +71,7 @@ class DFS:
 
         return {
             'ares': ares_position,
-            'stones': tuple(sorted(stone_positions)),  # Sort the stone positions
+            'stones': tuple(stone_positions),
             'stone_weights': stone_weights,
             'switches': switch_positions,
             'maze': tuple(maze),
@@ -87,8 +87,11 @@ class DFS:
     
         start_time = time.time()
         memory_tracker = MemoryTracker()
+        
+        # Sort the stone positions for canonical state representation
+        canonical_stone_positions = tuple(sorted(self.start_state['stones']))
 
-        start_state = (self.start_state['ares'], self.start_state['stones'])
+        start_state = (self.start_state['ares'], canonical_stone_positions)
         stack = [start_state]
         visited = set([start_state])
         parent_map = {start_state: None}

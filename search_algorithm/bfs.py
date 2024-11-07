@@ -71,7 +71,7 @@ class BFS:
 
         return {
             'ares': ares_position,
-            'stones': tuple(sorted(stone_positions)),  # Sort the stone positions
+            'stones': tuple(stone_positions),
             'stone_weights': stone_weights,
             'switches': switch_positions,
             'maze': tuple(maze),
@@ -86,11 +86,12 @@ class BFS:
             return
         
         start_time = time.time()
-
-         # Initialize memory tracker
         memory_tracker = MemoryTracker()
 
-        start_state = (self.start_state['ares'], tuple(self.start_state['stones']))
+        # Sort the stone positions for canonical state representation
+        canonical_stone_positions = tuple(sorted(self.start_state['stones']))
+
+        start_state = (self.start_state['ares'], canonical_stone_positions)
         queue = deque([start_state])
         visited = set([start_state])
         parent_map = {start_state: None}
@@ -175,7 +176,7 @@ class BFS:
     def is_deadlock(self, stone_positions):
         stones_set = set(stone_positions) # convert to set for faster lookup, average time complexity O(1)
         maze = self.start_state['maze']
-        
+
         for stone in stone_positions:
             x, y = stone
 

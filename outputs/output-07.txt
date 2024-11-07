@@ -16,3 +16,12 @@ lUluuRurrDrddLUUdddlluUURldddrruLdlUU
 DFS
 Steps: 141, Cost: 273, Node: 1354, Time (ms): 21.703481674194336, Memory (MB): 0.3581523895263672
 rUruuLDuullDRllddRdrrUruuLrddldlluRlluurDuurrdrddLruulLrrddldllUdrruUddlluluuRlddrUddrruuUrddldlluRdrUdlluuURlddrrruuLDrdLruulLrrddldlluRdrUU
+UCS
+Steps: 37, Cost: 86, Node: 9783, Time (ms): 174.11231994628906, Memory (MB): 2.8156538009643555
+lUluuRurrDrddLUUdddlluUURldddrruLdlUU
+BFS
+Steps: 37, Cost: 86, Node: 4298, Time (ms): 64.50247764587402, Memory (MB): 0.9452276229858398
+lUluuRurrDrddLUUdddlluUURldddrruLdlUU
+A*
+Steps: 37, Cost: 86, Node: 1397, Time (ms): 56.168556213378906, Memory (MB): 0.45375728607177734
+lUluuRurrDrddLUUdddlluUURldddrruLdlUU

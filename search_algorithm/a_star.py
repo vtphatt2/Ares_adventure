@@ -71,7 +71,7 @@ class A_star:
 
         return {
             'ares': ares_position,
-            'stones': tuple(sorted(stone_positions)),  # Sort the stone positions
+            'stones': tuple(stone_positions),
             'stone_weights': stone_weights,
             'switches': switch_positions,
             'maze': tuple(maze),

@@ -71,8 +71,7 @@ class UCS:
 
         return {
             'ares': ares_position,
-            'stones': tuple(sorted(stone_positions)),  # Sort the stone positions
-            'stone_weights': stone_weights,
+            'stones': tuple(stone_positions),            'stone_weights': stone_weights,
             'switches': switch_positions,
             'maze': tuple(maze),
             'cost': 0

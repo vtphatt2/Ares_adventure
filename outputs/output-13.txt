@@ -43,3 +43,15 @@ luuRRUdllddrrUdlluururUdldlddrruUUdddrruLdllluurrurDlllddrrUUruLdddrUUllUU
 A*
 Steps: 74, Cost: 264, Node: 13414, Time (ms): 489.50695991516113, Memory (MB): 3.931669235229492
 luuRRUdllddrrUdlluururUdldlddrruUUdddrruLdllluurrurDlllddrrUUruLdddrUUllUU
+A*
+Steps: 74, Cost: 285, Node: 18128, Time (ms): 600.1129150390625, Memory (MB): 4.764434814453125
+luuRRUdllddrrUdlluururUdldlddrruUUdddrruLdllluurrurDlllddrrUUruLdddrUUllUU
+BFS
+Steps: 56, Cost: 267, Node: 24189, Time (ms): 393.33152770996094, Memory (MB): 7.682292938232422
+luuRRUUldldddrrUUddrruLdllluurrUrDlllddrrUUruLdddrUUllUU
+UCS
+Steps: 56, Cost: 267, Node: 66568, Time (ms): 1273.604154586792, Memory (MB): 20.00112533569336
+luuRRUUldldddrrUUddrruLdllluurrUrDlllddrrUUruLdddrUUllUU
+BFS
+Steps: 56, Cost: 267, Node: 24189, Time (ms): 403.7351608276367, Memory (MB): 7.743251800537109
+luuRRUUldldddrrUUddrruLdllluurrUrDlllddrrUUruLdddrUUllUU
