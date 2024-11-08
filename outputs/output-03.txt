@@ -10,3 +10,9 @@ dlUruLulldRllddrURRdrruulDlluRlulldRR
 A*
 Steps: 37, Cost: 94, Node: 703, Time (ms): 24.153709411621094, Memory (MB): 0.1730508804321289
 dlUruLulldRllddrURRdrruulDlluRlulldRR
+BFS
+Steps: 37, Cost: 94, Node: 6318, Time (ms): 116.75429344177246, Memory (MB): 1.7988910675048828
+dlUruLulldRllddrURRdrruulDlluRullldRR
+DFS
+Steps: 149, Cost: 407, Node: 6564, Time (ms): 119.09747123718262, Memory (MB): 1.8033485412597656
+dlUruLLulldRRRlllddrURRdrruLruLdLruLdLruulllddRRRdrruLdlUllluurrDRlulldRRldRRdrruLLLullddrUruurDullDrdRdrruLruLLLdRdrruulDlluulldRRRlllddrUrruullldRR

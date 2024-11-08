@@ -92,29 +92,52 @@ class DFS:
         canonical_stone_positions = tuple(sorted(self.start_state['stones']))
 
         start_state = (self.start_state['ares'], canonical_stone_positions)
-        stack = [start_state]
-        visited = set([start_state])
         parent_map = {start_state: None}
         nodes_generated = 0
 
+        if self.is_goal_state(start_state):
+            print("Goal reached!")
+            path = self.reconstruct_path(start_state, parent_map)
+            self.result.set_sequence_of_actions(path)
+            self.result.set_steps(len(path))
+            self.result.set_cost_steps(self.find_cost_each_step(path))
+            total_cost = self.result.get_cost_steps()[-1]
+            self.result.set_total_cost(total_cost)
+            # Record time and memory usage
+            end_time = time.time()
+            self.result.set_time((end_time - start_time) * 1000)
+            self.result.set_memory(memory_tracker.peak_memory_usage())
+            self.result.set_node(nodes_generated + 1)
+            memory_tracker.stop_tracking()
+            return
+
+        stack = [start_state]
+        visited = set([start_state])
+
         while stack:
             current_state = stack.pop()
-            ares_position, stone_positions = current_state
             nodes_generated += 1
-
-            # Goal test
-            if all(stone in self.start_state['switches'] for stone in stone_positions):
-                print("Goal reached!")
-                path = self.reconstruct_path(current_state, parent_map)
-                self.result.set_sequence_of_actions(path)
-                self.result.set_steps(len(path))
-                self.result.set_cost_steps(self.find_cost_each_step(path))
-                total_cost = self.result.get_cost_steps()[-1]
-                self.result.set_total_cost(total_cost)
-                break
 
             for neighbor_state, action in self.get_neighbors(current_state):
                 if neighbor_state not in visited:
+                    # Early Goal Test
+                    if self.is_goal_state(neighbor_state):
+                        print("Goal reached!")
+                        parent_map[neighbor_state] = (current_state, action)
+                        path = self.reconstruct_path(neighbor_state, parent_map)
+                        self.result.set_sequence_of_actions(path)
+                        self.result.set_steps(len(path))
+                        self.result.set_cost_steps(self.find_cost_each_step(path))
+                        total_cost = self.result.get_cost_steps()[-1]
+                        self.result.set_total_cost(total_cost)
+                        # Record time and memory usage
+                        end_time = time.time()
+                        self.result.set_time((end_time - start_time) * 1000)
+                        self.result.set_memory(memory_tracker.peak_memory_usage())
+                        self.result.set_node(nodes_generated)
+                        memory_tracker.stop_tracking()
+                        return
+                    
                     visited.add(neighbor_state)
                     stack.append(neighbor_state)
                     parent_map[neighbor_state] = (current_state, action)
@@ -126,6 +149,10 @@ class DFS:
         self.result.set_node(nodes_generated)
 
         memory_tracker.stop_tracking()
+
+    def is_goal_state(self, state):
+        _, stone_positions = state
+        return all(stone in self.start_state['switches'] for stone in stone_positions)
 
     def get_neighbors(self, state):
         neighbors = []
