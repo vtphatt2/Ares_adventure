@@ -71,9 +71,9 @@ class DFS:
 
         return {
             'ares': ares_position,
-            'stones': tuple(sorted(stone_positions)),  # Sort the stone positions
-            'stone_weights': stone_weights,
-            'switches': switch_positions,
+            'stones': tuple(stone_positions), 
+            'stone_weights': tuple(stone_weights),
+            'switches': tuple(switch_positions),
             'maze': tuple(maze),
             'cost': 0
         }
@@ -88,7 +88,10 @@ class DFS:
         start_time = time.time()
         memory_tracker = MemoryTracker()
 
-        start_state = (self.start_state['ares'], tuple(self.start_state['stones']), frozenset())
+        # Sort the stone positions for canonical state representation
+        canonical_stone_positions = tuple(sorted(self.start_state['stones']))
+
+        start_state = (self.start_state['ares'], canonical_stone_positions, frozenset())
         stack = [start_state]
         visited = set([start_state])
         parent_map = {start_state: None}
@@ -179,6 +182,9 @@ class DFS:
         cost_each_step = []
         
         directions = {'u': (0, -1), 'l': (-1, 0), 'd': (0, 1), 'r': (1, 0)}
+
+        if not path:
+            return [0]
         
         for action in path:
             if action.islower():  # Regular move
