@@ -91,7 +91,7 @@ class UCS:
 
         start_state = (self.start_state['ares'], tuple(self.start_state['stones']))
         frontier = []
-        # similar to A8 but only use cost as priority, no heuristic
+        # similar to A* but only use cost as priority, no heuristic
         heapq.heappush(frontier, (0, start_state))
         visited = set()
         parent_map = {start_state: None}

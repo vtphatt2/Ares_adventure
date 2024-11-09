@@ -1,27 +1,12 @@
 BFS
-Steps: 82, Cost: 747, Node: 22610, Time (ms): 365.97537994384766, Memory (MB): 7.63874626159668
-ldddRluRluurDDuurrddLDDDldRRluuuuruullldddRluurDrDDDlddrruLdrrruLdlluuuuulldRurDDD
+Steps: 120, Cost: 162, Node: 1656989, Time (ms): 26400.25782585144, Memory (MB): 436.97432231903076
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
 DFS
-Steps: 226, Cost: 1629, Node: 21038, Time (ms): 334.2781066894531, Memory (MB): 6.238407135009766
-lddRldRluuurrrddLDDDldRRdlluuruulluRdrdddrdrruLdllluuruulluuurDDldRluururrddLruulldlddrUrDDDlddrURlUdrdrruLLdlluurUUlluuurDDluurrrddLdddldRRdlluuruuuruulldldRldRluururrddLruulldDrDDDlddrruLrdrruLdlluuuuuruulldlddRluururrddlDDD
+Steps: 158, Cost: 200, Node: 410, Time (ms): 1.0058879852294922, Memory (MB): 0.06130790710449219
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDrrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUdlllullllllllluulllDDuurrrddrrrrrrrrrdrrruUUUUU
 UCS
-Steps: 82, Cost: 747, Node: 25102, Time (ms): 3350.454807281494, Memory (MB): 13.430912971496582
-ldddRluRluurDDuurrddLDDDldRRluuuuruullldddRluurDrDDDlddrruLrdrruLdlluuuuulldRurDDD
+Steps: 120, Cost: 162, Node: 1873435, Time (ms): 39101.47476196289, Memory (MB): 550.6293754577637
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU
 A*
-Steps: 86, Cost: 751, Node: 10356, Time (ms): 346.5421199798584, Memory (MB): 2.804910659790039
-lddRluurDlddRluurDuurrddLDDDldRRluuuuruulldlddRluurDrDDDlddrruLrdrruLdlluuuuulldRurDDD
-BFS
-Steps: 82, Cost: 747, Node: 22610, Time (ms): 355.6356430053711, Memory (MB): 7.529340744018555
-ldddRluRluurDDuurrddLDDDldRRluuuuruullldddRluurDrDDDlddrruLdrrruLdlluuuuulldRurDDD
-A*
-Steps: 86, Cost: 751, Node: 10356, Time (ms): 367.42305755615234, Memory (MB): 2.827310562133789
-lddRluurDlddRluurDuurrddLDDDldRRluuuuruulldlddRluurDrDDDlddrruLrdrruLdlluuuuulldRurDDD
-UCS
-Steps: 82, Cost: 747, Node: 31228, Time (ms): 642.7040100097656, Memory (MB): 10.635704040527344
-lddRldRluuurDDuurrddLDDDldRRluuuuruullldddRluurDrDDDlddrruLdrrruLdlluuuuulldRurDDD
-BFS
-Steps: 82, Cost: 747, Node: 22402, Time (ms): 381.5162181854248, Memory (MB): 7.532743453979492
-ldddRluRluurDDuurrddLDDDldRRluuuuruullldddRluurDrDDDlddrruLdrrruLdlluuuuulldRurDDD
-DFS
-Steps: 226, Cost: 1629, Node: 21037, Time (ms): 357.3338985443115, Memory (MB): 6.325946807861328
-lddRldRluuurrrddLDDDldRRdlluuruulluRdrdddrdrruLdllluuruulluuurDDldRluururrddLruulldlddrUrDDDlddrURlUdrdrruLLdlluurUUlluuurDDluurrrddLdddldRRdlluuruuuruulldldRldRluururrddLruulldDrDDDlddrruLrdrruLdlluuuuuruulldlddRluururrddlDDD
+Steps: 120, Cost: 162, Node: 1651429, Time (ms): 84721.42100334167, Memory (MB): 518.0786170959473
+rrrrrrrrRRRRRRRRlllllllllllllllldddddddrruuuuurrrrrrRRRRRRRRllllllllllllDDDDuurrrrRRRRRRRRlllllllllddrRRRRRRRRdrrrUUUUUU

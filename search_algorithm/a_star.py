@@ -84,7 +84,7 @@ class A_star:
     def heuristic(self, state):
         ares_position, stone_positions = state
         stone_weights = self.start_state['stone_weights']
-        
+
         stone_to_switch_distance = sum(
             min(abs(stone[0] - switch[0]) + abs(stone[1] - switch[1]) for switch in self.start_state['switches']) * stone_weights[i]
             for i, stone in enumerate(stone_positions)
@@ -125,8 +125,8 @@ class A_star:
                 self.result.set_total_cost(total_cost)
                 break
                 
-            for neighbor_state, action in self.get_neighbors(current_state):
-                new_cost = cost_so_far[current_state] + 1
+            for neighbor_state, action, action_cost in self.get_neighbors(current_state):
+                new_cost = cost_so_far[current_state] + action_cost
                 if neighbor_state not in cost_so_far or new_cost < cost_so_far[neighbor_state]:
                     cost_so_far[neighbor_state] = new_cost
                     priority = new_cost + self.heuristic(neighbor_state)
@@ -196,7 +196,7 @@ class A_star:
             # Move Ares without pushing a stone
             if self.is_valid_move(new_ares_position, stone_positions):
                 new_state = (new_ares_position, stone_positions)
-                neighbors.append((new_state, action))
+                neighbors.append((new_state, action, 1))  # Added cost of 1
             # Check if the stone can be pushed
             elif new_ares_position in stone_positions:
                 stone_index = stone_positions.index(new_ares_position)
@@ -209,8 +209,10 @@ class A_star:
                     if self.is_deadlock(new_stone_positions):
                         continue
 
+                    # Cost is 1 (move) + stone weight
+                    stone_cost = 1 + self.start_state['stone_weights'][stone_index]
                     new_state = (new_ares_position, tuple(new_stone_positions))
-                    neighbors.append((new_state, action.upper()))
+                    neighbors.append((new_state, action.upper(), stone_cost))
 
         return neighbors
     

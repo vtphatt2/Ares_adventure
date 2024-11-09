@@ -1,36 +1,12 @@
 BFS
-Steps: 23, Cost: 42, Node: 401, Time (ms): 6.999015808105469, Memory (MB): 0.13394832611083984
-rrDulldRRurDrddllURuulD
-A*
-Steps: 23, Cost: 42, Node: 186, Time (ms): 5.553007125854492, Memory (MB): 0.03270530700683594
-rrDulldRRurDrddllURuulD
-A*
-Steps: 23, Cost: 42, Node: 445, Time (ms): 12.886285781860352, Memory (MB): 0.07849311828613281
-rrDulldRRurDrddllURuulD
+Steps: 37, Cost: 94, Node: 6318, Time (ms): 95.40009498596191, Memory (MB): 1.7988224029541016
+dlUruLulldRllddrURRdrruulDlluRullldRR
 DFS
-Steps: 29, Cost: 58, Node: 421, Time (ms): 4.012107849121094, Memory (MB): 0.06083869934082031
-rrDulldRRurDrddllURuLulldRurD
-A*
-Steps: 23, Cost: 42, Node: 186, Time (ms): 17.635345458984375, Memory (MB): 0.03269004821777344
-rrDulldRRurDrddllURuulD
+Steps: 149, Cost: 407, Node: 6564, Time (ms): 101.44662857055664, Memory (MB): 1.8032646179199219
+dlUruLLulldRRRlllddrURRdrruLruLdLruLdLruulllddRRRdrruLdlUllluurrDRlulldRRldRRdrruLLLullddrUruurDullDrdRdrruLruLLLdRdrruulDlluulldRRRlllddrUrruullldRR
 UCS
-Steps: 23, Cost: 42, Node: 376, Time (ms): 23.49996566772461, Memory (MB): 0.32509517669677734
-rrDulldRRurDrddllURuulD
-DFS
-Steps: 29, Cost: 58, Node: 421, Time (ms): 5.108118057250977, Memory (MB): 0.06081581115722656
-rrDulldRRurDrddllURuLulldRurD
-BFS
-Steps: 23, Cost: 42, Node: 401, Time (ms): 4.999637603759766, Memory (MB): 0.06203651428222656
-rrDulldRRurDrddllURuulD
-UCS
-Steps: 23, Cost: 42, Node: 368, Time (ms): 5.011558532714844, Memory (MB): 0.07893180847167969
-rrDulldRRurDrddllURuulD
+Steps: 37, Cost: 94, Node: 17748, Time (ms): 308.18700790405273, Memory (MB): 5.078169822692871
+dlUruLulldRllddrURRdrruulDlluRlulldRR
 A*
-Steps: 23, Cost: 42, Node: 186, Time (ms): 15.20991325378418, Memory (MB): 0.03264427185058594
-rrDulldRRurDrddllURuulD
-BFS
-Steps: 23, Cost: 42, Node: 360, Time (ms): 5.33294677734375, Memory (MB): 0.06165504455566406
-rrDulldRRurDrddllURuulD
-DFS
-Steps: 29, Cost: 58, Node: 420, Time (ms): 6.001710891723633, Memory (MB): 0.06044960021972656
-rrDulldRRurDrddllURuLulldRurD
+Steps: 37, Cost: 94, Node: 2509, Time (ms): 89.66684341430664, Memory (MB): 0.8964776992797852
+dlUruLulldRllddrURRdrruulDlluRlulldRR
