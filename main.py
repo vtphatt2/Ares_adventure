@@ -2,9 +2,9 @@ import sys
 import os
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QHBoxLayout, QVBoxLayout, QComboBox, 
-    QPushButton, QLabel
+    QPushButton, QLabel, QDialog, QProgressBar
 )
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from model.maze import Maze
 from gui.view import MazeView
 from controller.controller import MazeController
@@ -15,71 +15,81 @@ from search_algorithm.dfs_3 import DFS
 from search_algorithm.ucs_new import UCS
 from search_algorithm.a_star import A_star
 
+class SolverThread(QThread):
+    finished = pyqtSignal(object)
+    
+    def __init__(self, algorithm_class, file_path):
+        super().__init__()
+        self.algorithm_class = algorithm_class
+        self.file_path = file_path
+
+    def run(self):
+        algorithm_instance = self.algorithm_class(self.file_path)
+        algorithm_instance.run()
+        result = algorithm_instance.get_result()
+        self.finished.emit(result)
+
+class RunningDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Solver Running")
+        self.setModal(True)
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowType.WindowCloseButtonHint)
+        layout = QVBoxLayout()
+        label = QLabel("Solver is running. Please wait...")
+        layout.addWidget(label)
+        self.setLayout(layout)
+
 class MainWindow(QWidget):
     def __init__(self):
-        # self.delete_output_files()
-
         super().__init__()
-        self.setWindowTitle("Ares's Adventure")  # Set the window title
-
-        # Main vertical layout for the window
+        self.setWindowTitle("Ares's Adventure")
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
-        # Horizontal layout for the file selector and algorithm selector
         self.top_layout = QHBoxLayout()
 
-        # ComboBox for selecting the input file
         self.file_selector = QComboBox()
-        self.load_input_files()  # Load available input files into the ComboBox
-        self.file_selector.currentTextChanged.connect(self.load_maze_from_selected_file)  
-        self.top_layout.addWidget(self.file_selector)  # Add to horizontal layout
+        self.load_input_files()
+        self.file_selector.currentTextChanged.connect(self.load_maze_from_selected_file)
+        self.top_layout.addWidget(self.file_selector)
 
-        # ComboBox for selecting the algorithm
         self.algorithm_selector = QComboBox()
-        self.algorithm_selector.addItems(["BFS", "DFS", "UCS", "A*"])  # Add options
-        self.top_layout.addWidget(self.algorithm_selector)  # Add to horizontal layout
+        self.algorithm_selector.addItems(["BFS", "DFS", "UCS", "A*"])
+        self.top_layout.addWidget(self.algorithm_selector)
 
-        # Add the horizontal layout to the main vertical layout
         self.layout.addLayout(self.top_layout)
 
-        # Horizontal layout for the Start, Reset buttons and Speed selector
         self.button_layout = QHBoxLayout()
 
-        # Button to start the simulation
         self.start_button = QPushButton("Start")
-        self.start_button.clicked.connect(self.start_simulation)  # Connect to event handler
-        self.button_layout.addWidget(self.start_button)  # Add Start button to button layout
+        self.start_button.clicked.connect(self.start_simulation)
+        self.button_layout.addWidget(self.start_button)
 
-        # Button to reset the simulation
         self.reset_button = QPushButton("Reset")
-        self.reset_button.clicked.connect(self.reset_simulation)  # Connect to event handler
-        self.button_layout.addWidget(self.reset_button)  # Add Reset button to button layout
+        self.reset_button.clicked.connect(self.reset_simulation)
+        self.button_layout.addWidget(self.reset_button)
 
-        # Add Speed ComboBox next to Reset button
         self.speed_selector = QComboBox()
         self.speed_selector.addItems(["x1.0", "x2.0", "x3.0", "x4.0", "x5.0", "x6.0", "x7.0", "x8.0", 
                                       "x9.0", "x10.0", "x12.0", "x15.0", "x18.0", "x20.0", "x25.0", "x30.0",
-                                      "x40.0", "x50.0"])  # Add speed options
-        self.speed_selector.setCurrentIndex(0)  # Set default selection to "x1.5"
-        self.speed_selector.currentTextChanged.connect(self.change_speed)  # Connect to handler
-        self.button_layout.addWidget(QLabel("Speed:"))  # Optional label for clarity
-        self.button_layout.addWidget(self.speed_selector)  # Add Speed selector to button layout
+                                      "x40.0", "x50.0"])
+        self.speed_selector.setCurrentIndex(0)
+        self.speed_selector.currentTextChanged.connect(self.change_speed)
+        self.button_layout.addWidget(QLabel("Speed:"))
+        self.button_layout.addWidget(self.speed_selector)
 
-        # Add the button layout to the main layout
         self.layout.addLayout(self.button_layout)
 
         self.custom_text = QLabel("Step 0 --- Total cost : 0")  
         self.layout.addWidget(self.custom_text)
 
-        # Initialize maze and its view
         self.current_maze = None
         self.current_view = None
+        self.controller = None
+        self.thread = None
+        self.dialog = None
 
-        # Initialize controller
-        self.controller = None  # Initialize controller as None
-
-        # Load the default maze from the currently selected file
         self.load_maze_from_selected_file(self.file_selector.currentText())
 
     def load_input_files(self):
@@ -149,47 +159,51 @@ class MainWindow(QWidget):
                 "A*": A_star
             }
 
-            # Run the selected algorithm
             if algorithm_name in algorithms:
                 algorithm_class = algorithms[algorithm_name]
-                algorithm_instance = algorithm_class(file_path)
-                algorithm_instance.run()
-                result = algorithm_instance.get_result()
+                
+                self.dialog = RunningDialog(self)
+                self.dialog.show()
 
-            input_filename = os.path.basename(file_path)
-            output_filename = input_filename.replace('input', 'output')
-            output_path = os.path.join(outputs_dir, output_filename)
+                self.thread = SolverThread(algorithm_class, file_path)
+                self.thread.finished.connect(self.on_solver_finished)
+                self.thread.start()
 
-            result.save(output_path, duplicate=True)
+                self.start_button.setEnabled(False)
 
-            # Stop any existing controller before creating a new one
-            if self.controller:
-                self.controller.stop()
+    def on_solver_finished(self, result):
+        input_filename = os.path.basename(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'inputs', self.file_selector.currentText()))
+        output_filename = input_filename.replace('input', 'output')
+        output_path = os.path.join('outputs', output_filename)
 
-            self.controller = MazeController(self.current_maze, self.current_view, result, self.custom_text)
-            self.controller.finished.connect(self.on_simulation_finished)  # Connect the signal
-            
-            # Set the initial speed based on the speed selector
-            speed_text = self.speed_selector.currentText()
-            speed_multiplier = float(speed_text.strip('x'))
-            self.controller.set_speed(speed_multiplier)
-            
-            self.controller.start()  # Start the controller's timer
+        result.save(output_path, duplicate=True)
 
-            self.start_button.setEnabled(False)  # Disable Start button
-
-    def on_simulation_finished(self):
-        self.start_button.setEnabled(True)  # Re-enable Start button
-        self.controller = None  # Clear the controller reference
-
-    def reset_simulation(self):
-        # Stop the controller if it's running
         if self.controller:
             self.controller.stop()
-            self.controller = None  # Clear the controller reference
+
+        self.controller = MazeController(self.current_maze, self.current_view, result, self.custom_text)
+        self.controller.finished.connect(self.on_simulation_finished)
+
+        speed_text = self.speed_selector.currentText()
+        speed_multiplier = float(speed_text.strip('x'))
+        self.controller.set_speed(speed_multiplier)
+        
+        self.controller.start()
+
+        self.dialog.close()
+        self.thread = None
+
+    def on_simulation_finished(self):
+        self.start_button.setEnabled(True)
+        self.controller = None
+
+    def reset_simulation(self):
+        if self.controller:
+            self.controller.stop()
+            self.controller = None
         self.load_maze_from_selected_file(self.file_selector.currentText())
         self.custom_text.setText("Step 0 --- Total cost : 0")
-        self.start_button.setEnabled(True)  # Ensure Start button is enabled
+        self.start_button.setEnabled(True)
 
     def change_speed(self, text):
         if self.controller:
