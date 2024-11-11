@@ -1,13 +1,13 @@
 # Ares's adventure
 Ares’s adventure is a project that demonstrates four fundamental search algorithms in artificial intelligence (BFS, DFS, UCS, A*) by guiding Ares through a complex maze, moving heavy stones onto secret switches to unlock a mysterious treasure gate.
 
-# Quick run?
+# Quick run
 1. Install the required libraries from the requirements.txt file using the following command:
 > pip install -r requirements.txt
 
 2. Run the program using the command:
 - For Windows: python main.py
-- For macOS: python3 main.py
+- For macOS/Linux: python3 main.py
 
 # Members
 | **Name**| **Major**| **University**|
